@@ -1,0 +1,54 @@
+{% extends "baseDashboard.html" %}
+
+{% load static %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+  <h1 class="text-center py-2">{{subtitle}}</h1>
+
+  <form method="post" class="row my-3">
+    {% csrf_token %}
+    <div class="col-lg-4 mb-3">
+      <label class="form-label">PRESUPUESTO: <span class="text-danger">*</span></label>
+      {% render_field form.presupuesto|attr:"readonly:True" class="form-control" id="presupuesto" %}
+    </div>
+    <div class="col-lg-4 mb-3">
+        <label class="form-label">Razón social: <span class="text-danger">*</span></label>
+        {% render_field form.razonSocial|attr:'required:true' class="form-control" id="select2"%}
+    </div>
+    <div class="col-lg-4 mb-3">
+        <label class="form-label">Objetivo de ventas:<span class="text-danger">*</span></label>
+        {% render_field form.ventasObjetivo class="form-control" %}
+    </div>
+    <div class="col-lg-4 mb-3">
+        <label class="form-label">Real de ventas:</label>
+        {% render_field form.ventasRealizadas class="form-control" %}
+    </div>
+    <div class="col-lg-4 mb-3">
+        <label class="form-label">Objetivo de cobranza:<span class="text-danger">*</span></label>
+        {% render_field form.cobranzaObjetivo class="form-control" %}
+    </div>
+    <div class="col-lg-4 mb-3">
+        <label class="form-label">Real de cobranza:</label>
+        {% render_field form.cobranzaRealizada class="form-control" %}
+    </div>
+
+    <button type="submit" class="btn btn-primary mx-auto my-3">
+        <i class="fas fa-save"></i>
+        Guardar
+    </button>
+  </form>
+
+{% endblock content %}
+
+{% block scripts %}
+<script>
+        $(document).ready(function(){
+            $('#mes').select2()
+            $('#select2').select2();
+        })
+
+  </script>
+{% endblock scripts %}
+

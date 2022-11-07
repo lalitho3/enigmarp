@@ -1,0 +1,553 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="es-mx">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PDF - {{credito.RazonSocial}}</title>
+</head>
+
+
+<style type="text/css">
+
+
+
+*{
+	margin: 0;
+	padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+
+.header{
+	text-align: center;
+}
+
+h2{
+	text-align: center;
+	font-size: 24px;
+}
+
+table {
+		width: 100%;
+		line-height: inherit;
+		text-align: left;
+}
+
+.contenido{
+	margin-bottom: 6px;
+}
+
+
+table td {
+			padding-top: 3px;
+			vertical-align: top;
+}
+
+table tr td:nth-child(2) {
+				text-align: right;
+				vertical-align: top;
+			}
+
+table tr td:nth-child(3) {
+				text-align: right;
+				vertical-align: top;
+			}
+
+
+.info{
+	background-color: #95a5a6;
+}
+
+
+@media print {
+	@page {
+  		size: A4 portrait; 
+		margin: 10px;
+	}
+}
+
+
+</style>
+
+
+
+</style>
+
+<body>
+	<div class="header">
+		<div class="img">
+			<img src="data:image/jpeg;base64,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" alt="Logo MULTIPOLIMEROS" srcset="" style="width: 100%; max-width: 150px; height: auto;">
+		</div>
+		<div class="title">
+			<p style="font-size: 13px;">Otumba No. 2, La loma, 54076, Tlalnepantla de Baz, Mex.</p>
+		</div>
+	</div>
+
+	<h2 style="text-align: center;">SOLICITUD DE CREDITO</h2>
+
+	<table style="width: 100%;">
+		<tr class="top">
+			<td colspan="2">
+				<table>
+					<tr>
+						<td class="title" style="width: 33%;">
+							<div class="contenido">
+								<span>Fecha: <br>
+									<b>{{credito.Fecha}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Razon social: <br>
+									<b>{{credito.RazonSocial}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Nombre comercial: <br>
+									<b>{{credito.NombreComercial}}</b> 
+								</span><br/>
+							</div>
+
+							<div class="contenido">
+								<span>RFC: <br>
+									<b>{{credito.Rfc}}</b> 
+								</span><br>
+							</div>
+						</td>
+
+						<td style="width: 33%;">
+							<div class="contenido">
+								<span>Cod. ruta: <br>
+									<b>{{credito.CodRuta}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Cod. agente: <br>
+									<b>{{credito.CodAgente}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Nombre de agente: <br>
+									<b>{{credito.NombreAgente}}</b> 
+									</span><br>
+							</div>
+
+							
+
+						</td>
+
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+	</table>
+
+
+	<div class="info">
+		<p style="text-align: center; font-size: 20px;">DETALLES GENERALES</p>
+	</div>
+
+
+	<table style="width: 100%;">
+		<tr class="top">
+			<td colspan="2">
+				<table >
+					<tr>
+						<td class="title" style="width: 33%;">
+							<div class="contenido">
+								<span>Calle: <br>
+									<b>{{credito.DireccionFiscal}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Num Exterior: <br>
+									<b>{{credito.NumExt}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Num Interior: <br>
+									<b>{{credito.NumInt}}</b> 
+								</span><br/>
+							</div>
+
+							<div class="contenido">
+								<span>Código postal: <br>
+									<b>{{credito.CodigoPostal}}</b> 
+								</span><br>
+							</div>
+
+							
+						</td>
+
+						<td style="text-align: center; width: 33%;">
+							<div class="contenido">
+								<span>Estado: <br>
+									<b>{{credito.Estado}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Municipio: <br>
+									<b>{{credito.Municipio}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Colonia: <br>
+									<b>{{credito.Colonia}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Dirección punto de venta: <br>
+									<b style="font-size: 12px;">{{credito.PuntoVenta}}</b> 
+									</span><br>
+							</div>
+
+						</td>
+
+						<td style="width: 33%;">
+							<div class="contenido" >
+								<span>Correo electronico: <br>
+									<b>{{credito.CorreoElectronico}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Telefono celular: <br>
+									<b>{{credito.Telefono}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>FAX: <br>
+									<b>{{credito.Fax}}</b> 
+									</span><br>
+							</div>
+
+
+						</td>
+
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+	</table>
+
+	<div class="info">
+		<p style="text-align: center; font-size: 20px;">DETALLES AVANZADOS</p>
+	</div>
+
+
+	<table style="width: 100%;">
+		<tr class="top">
+			<td colspan="2">
+				<table style="width: 100%;">
+					<tr>
+						<td style="width: 25%;">
+							
+
+							<div class="contenido">
+								<span>Lista de precios: <br>
+									<b>{{credito.ListaPrecios}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Descuento general: <br>
+									<b>{{credito.DescuentoGeneral}}%</b> 
+								</span><br/>
+							</div>
+
+							<div class="contenido">
+								<span>Plazo: <br>
+									<b>{{credito.Plazo}}</b> 
+								</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Fletera: <br>
+									<b>{{credito.Fletera}}</b> 
+								</span><br>
+							</div>
+						</td>
+
+						<td style="width: 25%; text-align: center;">
+							<div class="contenido">
+								<span>Descuentos por linea: <br>
+									<b>{{credito.DescuentosLinea}}%</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Linea de crédito: <br>
+									<b>${{credito.LineaCredito|intcomma}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Descuento pronto pago: <br>
+									<b>{{credito.DescuentoPronto}}%</b> 
+								</span><br/>
+							</div>
+
+							<div class="contenido">
+								<span>Interes moratorio: <br>
+									<b>{{credito.InteresMoratorio}}%</b> 
+								</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Contacto de fletera: <br>
+									<b>{{credito.ContactoFletera}}</b> 
+								</span><br>
+							</div>
+						</td>
+
+						<td style="text-align: center; width: 25%;">
+							<div class="contenido">
+								<span>Propietario: <br>
+									<b>{{credito.Propietario}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Gerente: <br>
+									<b>{{credito.Gerente}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Encargado de compras: <br>
+									<b>{{credito.PersonaCompras}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Encargado de ventas: <br>
+									<b>{{credito.PersonaVentas}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Numero de la fletera: <br>
+									<b>{{credito.TelefonoFletera}}</b> 
+								</span><br>
+							</div>
+
+						</td>
+
+						<td style="width: 25%; text-align: right;">
+							<div class="contenido">
+								<span>Nombre del propietario: <br>
+									<b>{{credito.Propietario}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Telefono celular: <br>
+									<b>{{credito.TelefonoPropietario}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Correo: <br>
+									<b>{{credito.FaxPropietarion}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Dirección del propietario: <br>
+									<b>{{credito.Direccion}}</b> 
+									</span><br>
+							</div>
+
+
+						</td>
+
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+	</table>
+
+	<div class="info">
+		<p style="text-align: center; font-size: 20px;">REFERENCIAS COMERCIALES</p>
+	</div>
+
+	<table style="width: 100%;">
+		<tr class="top">
+			<td colspan="2">
+				<table style="width: 100%;">
+					<tr>
+
+						<td style="width: 25%; text-align: left;">
+							<div class="contenido">
+								<span>Nombre de la referencia: <br>
+									<b>{{credito.ReferenciaNombre}}</b> 
+									</span><br>
+							</div>
+                            <div class="contenido">
+								<span>Nombre de la referencia(2): <br>
+									<b>{{credito.ReferenciaNombre2}}</b> 
+									</span><br>
+							</div>
+                            <div class="contenido">
+								<span>Nombre de la referencia(3): <br>
+									<b>{{credito.ReferenciaNombre3}}</b> 
+									</span><br>
+							</div>
+						</td>
+
+						<td class="title" style="width: 25%; text-align: center;">
+							<div class="contenido">
+								<span>Contacto de la referencia: <br>
+									<b>{{credito.ReferenciaContacto}}</b> 
+								</span><br>
+							</div>
+                            <div class="contenido">
+								<span>Contacto de la referencia(2): <br>
+									<b>{{credito.ReferenciaContacto2}}</b> 
+								</span><br>
+							</div>
+                            <div class="contenido">
+								<span>Contacto de la referencia(3): <br>
+									<b>{{credito.ReferenciaContacto3}}</b> 
+								</span><br>
+							</div>
+						</td>
+
+
+						<td style="text-align: center; width: 25%;">
+							<div class="contenido">
+								<span>Telefono de la referencia: <br>
+									<b>{{credito.ReferenciaTelefono}}</b> 
+								</span><br>
+                                <span>Telefono de la referencia(2): <br>
+									<b>{{credito.ReferenciaTelefono2}}</b> 
+								</span><br>
+                                <span>Telefono de la referencia(3): <br>
+									<b>{{credito.ReferenciaTelefono3}}</b> 
+								</span><br>
+							</div>
+						</td>
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+	</table>
+
+    <div class="info">
+		<p style="text-align: center; font-size: 20px;">REFERENCIA BANCARIA</p>
+	</div>
+
+
+    <table style="width: 100%;">
+		<tr class="top">
+			<td colspan="2">
+				<table style="width: 100%;">
+					<tr>
+
+						<td style="width: 25%; text-align: left;">
+							<div class="contenido">
+								<span>Nombre del banco: <br>
+									<b>{{credito.ReferenciaBancariaBanco}}</b> 
+									</span><br>
+							</div>
+						</td>
+
+						<td class="title" style="width: 25%; text-align: center;">
+							<div class="contenido">
+								<span>Cuenta bancaria: <br>
+									<b>{{credito.ReferenciaBancariaCuenta}}</b> 
+								</span><br>
+							</div>
+						</td>
+
+
+						<td style="text-align: center; width: 25%;">
+							<div class="contenido">
+								<span>Telefono del banco: <br>
+									<b>{{credito.ReferenciaBancariaTelefono}}</b> 
+								</span><br>
+							</div>
+						</td>
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+	</table>
+
+
+    <div class="info">
+		<p style="text-align: center; font-size: 20px;">REFERENCIAS COMERCIALES</p>
+	</div>
+
+
+    <table style="width: 100%;">
+		<tr class="top">
+			<td colspan="2">
+				<table style="width: 100%;">
+					<tr>
+
+						<td style="width: 25%; text-align: left;">
+							<div class="contenido">
+								<span>Nombre de la referencia: <br>
+									<b>{{credito.ReferenciaNombrePersonal}}</b> 
+									</span><br>
+							</div>
+                            <div class="contenido">
+								<span>Nombre de la referencia(2): <br>
+									<b>{{credito.ReferenciaNombrePersona2}}</b> 
+									</span><br>
+							</div>
+                            
+						</td>
+
+						<td class="title" style="width: 25%; text-align: center;">
+							<div class="contenido">
+								<span>Dirección de la referencia: <br>
+									<b>{{credito.ReferenciaDireccionPersonal}}</b> 
+								</span><br>
+							</div>
+                            <div class="contenido">
+								<span>Dirección de la referencia(2): <br>
+									<b>{{credito.ReferenciaDireccionPersona2}}</b> 
+								</span><br>
+							</div>
+                            
+						</td>
+
+
+						<td style="text-align: center; width: 25%;">
+							<div class="contenido">
+								<span>Telefono de la referencia: <br>
+									<b>{{credito.ReferenciaTelefonoPersonal}}</b> 
+								</span><br>
+                                <span>Telefono de la referencia(2): <br>
+									<b>{{credito.ReferenciaTelefonoPersona2}}</b> 
+								</span><br>
+                                
+							</div>
+						</td>
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

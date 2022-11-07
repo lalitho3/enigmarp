@@ -1,0 +1,53 @@
+{% extends "baseDashboard.html" %}
+
+{% load static %}
+
+{% block content %}
+  <div class="main-content" data-aos="fade-down">
+    <p class="text-center h2">Listado de productos</p>
+    <div class="container">
+       
+
+      <div class="table-responsive my-3">
+        <table id="tablaProductos" class="table align-middle mb-5">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Codigo de linea</th>
+                    <th>Codigo de color</th>
+                    <th>Descripción</th>
+                    <th>Precio LPA</th>
+                    <th>Precio LPD</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in productos %}
+                    <tr>
+                        <td>{{ p.id }}</td>
+                        <td>{{p.codLinea}}</td>
+                        <td>{{p.codColor}}</td>
+                        <td>{{p.descripcion}}</td>
+                        <td>{{p.lpa}}</td>
+                        <td>{{p.lpd}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    </div>
+  </div>
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function () {
+        $('#tablaProductos').DataTable({
+          "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+        });
+      });
+  </script>
+{% endblock scripts %}

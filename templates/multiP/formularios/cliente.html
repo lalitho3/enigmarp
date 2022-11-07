@@ -1,0 +1,378 @@
+{% extends "baseDashboard.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block header %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+{% endblock header %}
+
+{% block content %}
+        <div id="clientesStepper" class="bs-stepper">
+            <div class="bs-stepper-header" role="tablist">
+                <!-- your steps here -->
+                <div class="step" data-target="#logins-part">
+                    <button type="button" class="step-trigger" role="tab" aria-controls="logins-part" id="logins-part-trigger">
+                        <span class="bs-stepper-circle">1</span>
+                        <span class="bs-stepper-label">Información personal</span>
+                    </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#information-part">
+                    <button type="button" class="step-trigger" role="tab" aria-controls="information-part"
+                        id="information-part-trigger">
+                        <span class="bs-stepper-circle">2</span>
+                        <span class="bs-stepper-label">Tipo de cliente</span>
+                    </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#thirdSection">
+                    <button type="button" class="step-trigger" role="tab" aria-controls="thirdSection"
+                        id="thirdSection-trigger">
+                        <span class="bs-stepper-circle">3</span>
+                        <span class="bs-stepper-label">Relación de personal</span>
+                    </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#fourthSection">
+                    <button type="button" class="step-trigger" role="tab" aria-controls="fourthSection"
+                        id="fourthSection-trigger">
+                        <span class="bs-stepper-circle">4</span>
+                        <span class="bs-stepper-label">Información comercial</span>
+                    </button>
+                </div>
+            </div>
+            <div class="bs-stepper-content">
+                <div class="container">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div id="logins-part" class="container content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                                <div class="row">
+                                <div class="col-md-4 mb-2">
+                                    <label for="RazonSocial" class="form-label">Razón Social<span style="color: red;">*</span></label>
+                                    {% render_field form.RazonSocial class="form-control" placeholder="Razón Social" id="RazonSocial" %}
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <label for="RFC" class="form-label">RFC<span style="color: red;">*</span></label>
+                                    {% render_field form.Rfc class="form-control" placeholder="RFC" id="RFC" %}
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <label for="CRFC" class="form-label">Constancia RFC<span style="color: red;">*</span></label>
+                                    {% render_field form.Constancia class="form-control" placeholder="Constancia RFC" id="CRFC" %}
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label for="NC" class="form-label">Nombre Comercial<span style="color: red;">*</span></label>
+                                    {% render_field form.NombreComercial class="form-control" placeholder="Nombre Comercial" id="NC" %}
+                                </div>
+                                <div class="col-md-3 col-sm-12 mb-2">
+                                    <label for="CR" class="form-label">Código de Ruta</label>
+                                    {% render_field form.CodRuta class="form-control" placeholder="Código de Ruta" id="CR" %}
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <label for="CA" class="form-label">Código de Agente</label>
+                                    {% render_field form.CodAgente class="form-control" placeholder="Código de Agente" id="CA" %}
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label for="NA" class="form-label">Nombre de Agente</label>
+                                    {% render_field form.NombreAgente class="form-control" placeholder="Nombre de Agente" id="NA" %}
+                                </div>
+                                <div class="col-md-12 my-2 d-flex justify-content-center bg-primary text-white">
+                                    <h4>DIRECCION FISCAL</h4>
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <label for="CDP" class="form-label">Contacto</label>
+                                    {% render_field form.ContactoProspecto class="form-control" placeholder="Contacto" id="CDP" %}
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label for="DF" class="form-label">Calle</label>
+                                    {% render_field form.DireccionFiscal class="form-control" placeholder="Calle" id="DF" %}
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <label for="NEX" class="form-label">Num. Ext</label>
+                                    {% render_field form.NumExt class="form-control" placeholder="Ext" id="NEX" %}
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <label for="NI" class="form-label">Num. Int</label>
+                                    {% render_field form.NumInt class="form-control" placeholder="Int" id="NI" %}
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <label for="CP" class="form-label">Código postal</label>
+                                    {% render_field form.CodigoPostal class="form-control" placeholder="Codigo Postal" id="CP" %}
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label for="ER" class="form-label">Estado</label>
+                                    {% render_field form.Estado class="form-control" placeholder="Estado de la República" id="ER" %}
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label for="MC" class="form-label">Municipio</label>
+                                    {% render_field form.Municipio class="form-control" placeholder="Municipio o Localidad" id="MC" %}
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label for="CLO" class="form-label">Colonia</label>
+                                    {% render_field form.Colonia class="form-control" placeholder="Colonia" id="CLO" %}
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label for="CE" class="form-label">Correo Electronico<span style="color: red;">*</span></label>
+                                    {% render_field form.CorreoElectronico class="form-control" placeholder="Correo Electronico" id="CE" %}
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label for="NT" class="form-label">Numero Telefónico</label>
+                                    {% render_field form.Telefono class="form-control" placeholder="Telefono" id="NT" %}
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label for="NT" class="form-label">Segundo numero Telefónico</label>
+                                    {% render_field form.Telefono2 class="form-control" placeholder="Telefono" id="NT" %}
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label for="NC" class="form-label">Numero Celular<span style="color: red;">*</span></label>
+                                    {% render_field form.TelefonoCelular class="form-control" placeholder="Celular" id="NC" %}
+                                </div>
+                                <div class="col-md-12 my-2 d-flex justify-content-center bg-primary text-white">
+                                    <h4>DIRECCION FABRICA</h4>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                  <label for="DF" class="form-label">Calle</label>
+                                  {% render_field form.DireccionFabrica class="form-control" placeholder="Calle" %}
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                  <label for="NEX" class="form-label">Num. Ext</label>
+                                  {% render_field form.NumExtF class="form-control" placeholder="Ext" id="NEX" %}
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                  <label for="NI" class="form-label">Num. Int</label>
+                                  {% render_field form.NumIntF class="form-control" placeholder="Int" id="NI" %}
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                  <label for="CP" class="form-label">Código postal</label>
+                                  {% render_field form.CodigoPostalF class="form-control" placeholder="Codigo Postal" id="CP" %}
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                  <label for="ER" class="form-label">Estado</label>
+                                  {% render_field form.EstadoF class="form-control" placeholder="Estado de la República" id="ER" %}
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                  <label for="MC" class="form-label">Municipio</label>
+                                  {% render_field form.MunicipioF class="form-control" placeholder="Municipio o Localidad" id="MC" %}
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                  <label for="CLO" class="form-label">Colonia</label>
+                                  {% render_field form.ColoniaF class="form-control" placeholder="Colonia" id="CLO" %}
+                                </div>
+                                <a class="btn btn-primary my-4" onclick="stepper.next()">Siguiente</a>
+                                </div>
+                        </div>
+            
+                        <div id="information-part" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
+                            <div class="row">
+                                <div class="col-md-12 mb-2">
+                                    <label for="TP" class="form-label">Tipo de Cliente<span style="color: red;">*</span></label>
+                                    {% render_field form.TipoProspecto class="form-control" placeholder="Celular" id="TP" %}
+                                  </div>
+          
+                                  <div class="col-md-3 mb-2">
+                                    <label for="TP" class="form-label">Volumen esperado($)</span></label>
+                                    {% render_field form.VolumenCompra1 class="form-control" placeholder="Volumen $" id="TP" %}
+                                  </div>
+          
+                                  <div class="col-md-6 mb-2">
+                                    <label for="TP" class="form-label">Producto (1)</label>
+                                    {% render_field form.Producto1 class="form-control" placeholder="Producto" id="TP" %}
+                                  </div>
+          
+                                  <div class="col-md-3 mb-2">
+                                    <label for="TP" class="form-label">Precio($)</label>
+                                    {% render_field form.Precio1 class="form-control" placeholder="Precio  $" id="TP" %}
+                                  </div>
+          
+                                  <div class="col-md-3 mb-2">
+                                    <label for="TP" class="form-label">Volumen esperado($)</span></label>
+                                    {% render_field form.VolumenCompra2 class="form-control" placeholder="Volumen $" id="TP" %}
+                                  </div>
+          
+                                  <div class="col-md-6 mb-2">
+                                    <label for="TP" class="form-label">Producto (2)</label>
+                                    {% render_field form.Producto2 class="form-control" placeholder="Producto" id="TP" %}
+                                  </div>
+          
+                                  <div class="col-md-3 mb-2">
+                                    <label for="TP" class="form-label">Precio($)</label>
+                                    {% render_field form.Precio2 class="form-control" placeholder="Precio  $" id="TP" %}
+                                  </div>
+          
+                                  <div class="col-md-3 mb-2">
+                                    <label for="TP" class="form-label">Volumen esperado</span></label>
+                                    {% render_field form.VolumenCompra3 class="form-control" placeholder="Volumen $" id="TP" %}
+                                  </div>
+          
+                                  <div class="col-md-6 mb-2">
+                                    <label for="TP" class="form-label">Producto (3)</label>
+                                    {% render_field form.Producto3 class="form-control" placeholder="Producto" id="TP" %}
+                                  </div>
+          
+                                  <div class="col-md-3 mb-2">
+                                    <label for="TP" class="form-label">Precio($)</label>
+                                    {% render_field form.Precio3 class="form-control" placeholder="Precio  $" id="TP" %}
+                                  </div>
+          
+                                  <div class="col-md-3 mb-2">
+                                    <label for="TP" class="form-label">Volumen esperado($)</span></label>
+                                    {% render_field form.VolumenCompra4 class="form-control" placeholder="Volumen $" id="TP" %}
+                                  </div>
+          
+                                  <div class="col-md-6 mb-2">
+                                    <label for="TP" class="form-label">Producto (4)</label>
+                                    {% render_field form.Producto4 class="form-control" placeholder="Producto" id="TP" %}
+                                  </div>
+          
+                                  <div class="col-md-3 mb-2">
+                                    <label for="TP" class="form-label">Precio($)</label>
+                                    {% render_field form.Precio4 class="form-control" placeholder="Precio  $" id="TP" %}
+                                  </div>
+          
+                            </div>
+                            <a class="btn btn-primary my-4" onclick="stepper.previous()">Anterior</a>
+                            <a class="btn btn-primary my-4" onclick="stepper.next()">Siguiente</a>
+                        </div>
+            
+                        <div id="thirdSection" class="content" role="tabpanel" aria-labelledby="thirdSection-trigger">
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <label for="PP" class="form-label">Propietario</label>
+                                    {% render_field form.Propietario class="form-control" placeholder="Nombre del Propietario" id="PP" %}
+                                  </div>
+                                  <div class="col-md-6 mb-2">
+                                    <label for="GT" class="form-label">Gerente</label>
+                                    {% render_field form.Gerente class="form-control" placeholder="Nombre del Gerente" id="GT" %}
+                                  </div>
+                                  <div class="col-md-6 mb-2">
+                                    <label for="PEC" class="form-label">Persona Encargada de Compras</label>
+                                    {% render_field form.PersonaCompras class="form-control" placeholder="Nombre del Encargad@ en Compras" id="PEC" %}
+                                  </div>
+                                  <div class="col-md-6 mb-2">
+                                    <label for="PEV" class="form-label">Persona Encargada de Ventas</label>
+                                    {% render_field form.PersonaVentas class="form-control" placeholder="Nombre del Encargad@ en Ventas" id="PEV" %}
+                                  </div>
+                            </div>
+                            <a class="btn btn-primary my-4" onclick="stepper.previous()">Anterior</a>
+                            <a class="btn btn-primary my-4" onclick="stepper.next()">Siguiente</a>
+                        </div>
+                        <div id="fourthSection" class="content" role="tabpanel" aria-labelledby="fourthSection-trigger">
+                            <div class="row">
+                                <div class="col-md-12 mb-2">
+                                    <label for="MI" class="form-label">Marcas o Productos en Los Que Esta Interesado</label>
+                                    {% render_field form.ProductosInteres class="form-control" placeholder="Marcas o Productos" id="MI" %}
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <label for="MP" class="form-label">Marca Principal</label>
+                                    {% render_field form.MarcaPrincipal class="form-control" placeholder="Marcas o Productos" id="MP" %}
+                                </div>
+                                <div class="col-md-1 mb-2">
+                                    <label for="MP" class="form-label">(%)</label>
+                                    {% render_field form.PorcentajeMarcaPrincipal class="form-control" placeholder="Porcentaje(%%)" id="MP" %}
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <label for="SM" class="form-label">Segunda Marca(%)</label>
+                                    {% render_field form.SegundaMarca class="form-control" placeholder="Marcas o Productos" id="SM" %}
+                                </div>
+                                <div class="col-md-1 mb-2">
+                                    <label for="SM" class="form-label">(%)</label>
+                                    {% render_field form.PorcentajeSegundaMarca class="form-control" placeholder="Porcentaje" id="SM" %}
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <label for="OT" class="form-label">Otro</label>
+                                    {% render_field form.Otro class="form-control" placeholder="Otro" id="OT" %}
+                                </div>
+                                <div class="col-md-1 mb-2">
+                                    <label for="OT" class="form-label">(%)</label>
+                                    {% render_field form.PorcentajeOtro class="form-control" placeholder="Porcentaje" id="OT" %}
+                                </div>
+                                
+                                <div class="col-md-2 mb-2">
+                                    <label for="OT" class="form-label">Automotriz(%)</label>
+                                    {% render_field form.Automotriz class="form-control" placeholder="%" id="OT" %}
+                                </div>
+                                
+                                <div class="col-md-2 mb-2">
+                                    <label for="OT" class="form-label">Decorativo(%)</label>
+                                    {% render_field form.Decorativo class="form-control" placeholder="%" id="OT" %}
+                                </div>
+                                
+                                <div class="col-md-2 mb-2">
+                                    <label for="OT" class="form-label">Industrial(%)</label>
+                                    {% render_field form.Industrial class="form-control" placeholder="%" id="OT" %}
+                                </div>
+                                
+                                <div class="col-md-2 mb-2">
+                                    <label for="OT" class="form-label">Vinilica(%)</label>
+                                    {% render_field form.Vinilica class="form-control" placeholder="%" id="OT" %}
+                                </div>
+                                
+                                <div class="col-md-2 mb-2">
+                                    <label for="OT" class="form-label">Esmalte(%)</label>
+                                    {% render_field form.Esmalte class="form-control" placeholder="%" id="OT" %}
+                                </div>
+                                
+                                <div class="col-md-2 mb-2">
+                                    <label for="OT" class="form-label">Barnices(%)</label>
+                                    {% render_field form.Barnices class="form-control" placeholder="%" id="OT" %}
+                                </div>
+                                
+                                
+                                <div class="col-md-12 mb-2">
+                                    <label for="OT" class="form-label">Otras marcas o productos que maneja</label>
+                                    {% render_field form.Otras class="form-control" placeholder="Marcas/Productos" id="OT" %}
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <label for="OBS" class="form-label">Observaciones</label>
+                                    {% render_field form.Observaciones class="form-control" placeholder="Anote Aquí sus Observaciones" id="OBS" %}
+                                </div>
+                                
+                                <div class="col-md-12 my-2 d-flex justify-content-center bg-primary text-white">
+                                    <h4>INFORMACION DE PAGO</h4>
+                                  </div>
+        
+                                <div class="col-md-12 mb-2">
+                                    <label for="TDP" class="form-label">Tipo de pago<span style="color: red;">*</span></label>
+                                    {% render_field form.TipoPago class="form-control" placeholder="Selecciona una opción" id="TDP" %}
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                  <label for="DDP" class="form-label">Días de Pago</label>
+                                  {% render_field form.DiasPago class="form-control select2" placeholder="Día de pago" id="DDP" %}
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                  <label for="LDP" class="form-label">Lugar de Pago</label>
+                                  {% render_field form.LugarPago class="form-control" placeholder="Lugar de pago" id="LDP" %}
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                  <label for="DDR" class="form-label">Días de Revisión</label>
+                                  {% render_field form.DiasRevision class="form-control select2" placeholder="Día de revisión" id="DDR" %}
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <label for="LDR" class="form-label">Lugar de revisión</label>
+                                    {% render_field form.LugarRevision class="form-control" placeholder="Lugar de revisión" id="LDR" %}
+                                </div>
+        
+                                 <div class="col-md-12 mb-2">
+                                    <label for="LDR" class="form-label">Dirección de entrega</label>
+                                    {% render_field form.DireccionEntrega class="form-control" placeholder="Ingresa la dirección de entrega" id="LDR" %}
+                                </div>
+                            </div>
+                            <a class="btn btn-primary my-4" onclick="stepper.previous()">Anterior</a>
+                            <button type="submit" class="btn btn-primary my-4 mx-auto">Guardar Datos</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+              
+  {% block scripts %}
+
+  <script>
+    var stepper = new Stepper(document.querySelector("#clientesStepper"),{
+      animation : true,
+      linear: false
+    })
+  </script>
+  
+  {% endblock scripts %}
+
+{% endblock content %}

@@ -1,0 +1,85 @@
+{% extends "baseDashboard.html" %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block content %}
+
+<h1 class="text-center my-5">{{usuario.get_full_name}}</h1>
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-striped text-center" id="presupuestostable">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre del presupuesto</th>
+                    <th>Razón social</th>
+                    <th>Objetivo ventas</th>
+                    <th>Real ventas</th>
+
+                    <th>PORCENTAJE VENTAS</th>
+
+                    <th>Objetivo Cobranza</th>
+                    <th>Real cobranza</th>
+                    
+                    <th>PORCENTAJE COBRANZA</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in presupuestos %}
+                <tr>
+                    <td><strong>{{p.presupuesto}}</strong></td>          
+                    <td>{{p.razonSocial}}</td>
+                    <td>$ {{p.ventasObjetivo|intcomma}}</td>
+                    <td>$ {{p.ventasRealizadas|intcomma}}</td>
+
+                    {% if p.getVentasPercentage <= 30 %}
+                      <td class="bg-danger rounded">{{p.getVentasPercentage}}%</td>
+                    {% elif p.getVentasPercentage <= 60 %}
+                      <td class="bg-primary rounded">{{p.getVentasPercentage}}%</td>
+                    {% elif p.getVentasPercentage >= 90 %}
+                      <td class="bg-success rounded">{{p.getVentasPercentage}}%</td>
+                    {% endif %}
+
+
+                    <td>$ {{p.cobranzaObjetivo|intcomma}}</td>
+
+
+                    <td>$ {{p.cobranzaRealizada|intcomma}}</td>
+
+                    {% if p.getCobranzaPercentage <= 30 %}
+                      <td class="bg-danger rounded">{{p.getCobranzaPercentage}}%</td>
+                    {% elif p.getCobranzaPercentage <= 60 %}
+                      <td class="bg-primary rounded">{{p.getCobranzaPercentage}}%</td>
+                    {% elif p.getCobranzaPercentage >= 90 %}
+                      <td class="bg-success rounded">{{p.getCobranzaPercentage}}%</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    $('#presupuestostable').DataTable({
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+</script>
+{% endblock scripts %}

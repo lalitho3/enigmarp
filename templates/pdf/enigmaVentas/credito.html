@@ -1,0 +1,553 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="es-mx">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PDF - {{credito.RazonSocial}}</title>
+</head>
+
+
+<style type="text/css">
+
+
+
+*{
+	margin: 0;
+	padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+
+.header{
+	text-align: center;
+}
+
+h2{
+	text-align: center;
+	font-size: 24px;
+}
+
+table {
+		width: 100%;
+		line-height: inherit;
+		text-align: left;
+}
+
+.contenido{
+	margin-bottom: 6px;
+}
+
+
+table td {
+			padding-top: 3px;
+			vertical-align: top;
+}
+
+table tr td:nth-child(2) {
+				text-align: right;
+				vertical-align: top;
+			}
+
+table tr td:nth-child(3) {
+				text-align: right;
+				vertical-align: top;
+			}
+
+
+.info{
+	background-color: #95a5a6;
+}
+
+
+@media print {
+	@page {
+  		size: A4 portrait; 
+		margin: 10px;
+	}
+}
+
+
+</style>
+
+
+
+</style>
+
+<body>
+	<div class="header">
+		<div class="img">
+			<img src="https://i.pinimg.com/550x/7f/a4/76/7fa476fc4d4616ce8f520a8bf9a67094.jpg" alt="Logo PROMEX" srcset="" width="150">
+		</div>
+		<div class="title">
+			<p style="font-size: 13px;">C. Galeana 101, La Loma, 54060 Tlalnepantla de Baz, Méx.</p>
+		</div>
+	</div>
+
+	<h2 style="text-align: center;">SOLICITUD DE CREDITO</h2>
+
+	<table style="width: 100%;">
+		<tr class="top">
+			<td colspan="2">
+				<table>
+					<tr>
+						<td class="title" style="width: 33%;">
+							<div class="contenido">
+								<span>Fecha: <br>
+									<b>{{credito.Fecha}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Razon social: <br>
+									<b>{{credito.RazonSocial}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Nombre comercial: <br>
+									<b>{{credito.NombreComercial}}</b> 
+								</span><br/>
+							</div>
+
+							<div class="contenido">
+								<span>RFC: <br>
+									<b>{{credito.Rfc}}</b> 
+								</span><br>
+							</div>
+						</td>
+
+						<td style="width: 33%;">
+							<div class="contenido">
+								<span>Cod. ruta: <br>
+									<b>{{credito.CodRuta}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Cod. agente: <br>
+									<b>{{credito.CodAgente}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Nombre de agente: <br>
+									<b>{{credito.NombreAgente}}</b> 
+									</span><br>
+							</div>
+
+							
+
+						</td>
+
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+	</table>
+
+
+	<div class="info">
+		<p style="text-align: center; font-size: 20px;">DETALLES GENERALES</p>
+	</div>
+
+
+	<table style="width: 100%;">
+		<tr class="top">
+			<td colspan="2">
+				<table >
+					<tr>
+						<td class="title" style="width: 33%;">
+							<div class="contenido">
+								<span>Calle: <br>
+									<b>{{credito.DireccionFiscal}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Num Exterior: <br>
+									<b>{{credito.NumExt}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Num Interior: <br>
+									<b>{{credito.NumInt}}</b> 
+								</span><br/>
+							</div>
+
+							<div class="contenido">
+								<span>Código postal: <br>
+									<b>{{credito.CodigoPostal}}</b> 
+								</span><br>
+							</div>
+
+							
+						</td>
+
+						<td style="text-align: center; width: 33%;">
+							<div class="contenido">
+								<span>Estado: <br>
+									<b>{{credito.Estado}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Municipio: <br>
+									<b>{{credito.Municipio}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Colonia: <br>
+									<b>{{credito.Colonia}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Dirección punto de venta: <br>
+									<b style="font-size: 12px;">{{credito.PuntoVenta}}</b> 
+									</span><br>
+							</div>
+
+						</td>
+
+						<td style="width: 33%;">
+							<div class="contenido" >
+								<span>Correo electronico: <br>
+									<b>{{credito.CorreoElectronico}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Telefono celular: <br>
+									<b>{{credito.Telefono}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>FAX: <br>
+									<b>{{credito.Fax}}</b> 
+									</span><br>
+							</div>
+
+
+						</td>
+
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+	</table>
+
+	<div class="info">
+		<p style="text-align: center; font-size: 20px;">DETALLES AVANZADOS</p>
+	</div>
+
+
+	<table style="width: 100%;">
+		<tr class="top">
+			<td colspan="2">
+				<table style="width: 100%;">
+					<tr>
+						<td style="width: 25%;">
+							
+
+							<div class="contenido">
+								<span>Lista de precios: <br>
+									<b>{{credito.ListaPrecios}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Descuento general: <br>
+									<b>{{credito.DescuentoGeneral}}%</b> 
+								</span><br/>
+							</div>
+
+							<div class="contenido">
+								<span>Plazo: <br>
+									<b>{{credito.Plazo}}</b> 
+								</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Fletera: <br>
+									<b>{{credito.Fletera}}</b> 
+								</span><br>
+							</div>
+						</td>
+
+						<td style="width: 25%; text-align: center;">
+							<div class="contenido">
+								<span>Descuentos por linea: <br>
+									<b>{{credito.DescuentosLinea}}%</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Linea de crédito: <br>
+									<b>${{credito.LineaCredito|intcomma}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Descuento pronto pago: <br>
+									<b>{{credito.DescuentoPronto}}%</b> 
+								</span><br/>
+							</div>
+
+							<div class="contenido">
+								<span>Interes moratorio: <br>
+									<b>{{credito.InteresMoratorio}}%</b> 
+								</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Contacto de fletera: <br>
+									<b>{{credito.ContactoFletera}}</b> 
+								</span><br>
+							</div>
+						</td>
+
+						<td style="text-align: center; width: 25%;">
+							<div class="contenido">
+								<span>Propietario: <br>
+									<b>{{credito.Propietario}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Gerente: <br>
+									<b>{{credito.Gerente}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Encargado de compras: <br>
+									<b>{{credito.PersonaCompras}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Encargado de ventas: <br>
+									<b>{{credito.PersonaVentas}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Numero de la fletera: <br>
+									<b>{{credito.TelefonoFletera}}</b> 
+								</span><br>
+							</div>
+
+						</td>
+
+						<td style="width: 25%; text-align: right;">
+							<div class="contenido">
+								<span>Nombre del propietario: <br>
+									<b>{{credito.Propietario}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Telefono celular: <br>
+									<b>{{credito.TelefonoPropietario}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Correo: <br>
+									<b>{{credito.FaxPropietarion}}</b> 
+									</span><br>
+							</div>
+
+							<div class="contenido">
+								<span>Dirección del propietario: <br>
+									<b>{{credito.Direccion}}</b> 
+									</span><br>
+							</div>
+
+
+						</td>
+
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+	</table>
+
+	<div class="info">
+		<p style="text-align: center; font-size: 20px;">REFERENCIAS COMERCIALES</p>
+	</div>
+
+	<table style="width: 100%;">
+		<tr class="top">
+			<td colspan="2">
+				<table style="width: 100%;">
+					<tr>
+
+						<td style="width: 25%; text-align: left;">
+							<div class="contenido">
+								<span>Nombre de la referencia: <br>
+									<b>{{credito.ReferenciaNombre}}</b> 
+									</span><br>
+							</div>
+                            <div class="contenido">
+								<span>Nombre de la referencia(2): <br>
+									<b>{{credito.ReferenciaNombre2}}</b> 
+									</span><br>
+							</div>
+                            <div class="contenido">
+								<span>Nombre de la referencia(3): <br>
+									<b>{{credito.ReferenciaNombre3}}</b> 
+									</span><br>
+							</div>
+						</td>
+
+						<td class="title" style="width: 25%; text-align: center;">
+							<div class="contenido">
+								<span>Contacto de la referencia: <br>
+									<b>{{credito.ReferenciaContacto}}</b> 
+								</span><br>
+							</div>
+                            <div class="contenido">
+								<span>Contacto de la referencia(2): <br>
+									<b>{{credito.ReferenciaContacto2}}</b> 
+								</span><br>
+							</div>
+                            <div class="contenido">
+								<span>Contacto de la referencia(3): <br>
+									<b>{{credito.ReferenciaContacto3}}</b> 
+								</span><br>
+							</div>
+						</td>
+
+
+						<td style="text-align: center; width: 25%;">
+							<div class="contenido">
+								<span>Telefono de la referencia: <br>
+									<b>{{credito.ReferenciaTelefono}}</b> 
+								</span><br>
+                                <span>Telefono de la referencia(2): <br>
+									<b>{{credito.ReferenciaTelefono2}}</b> 
+								</span><br>
+                                <span>Telefono de la referencia(3): <br>
+									<b>{{credito.ReferenciaTelefono3}}</b> 
+								</span><br>
+							</div>
+						</td>
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+	</table>
+
+    <div class="info">
+		<p style="text-align: center; font-size: 20px;">REFERENCIA BANCARIA</p>
+	</div>
+
+
+    <table style="width: 100%;">
+		<tr class="top">
+			<td colspan="2">
+				<table style="width: 100%;">
+					<tr>
+
+						<td style="width: 25%; text-align: left;">
+							<div class="contenido">
+								<span>Nombre del banco: <br>
+									<b>{{credito.ReferenciaBancariaBanco}}</b> 
+									</span><br>
+							</div>
+						</td>
+
+						<td class="title" style="width: 25%; text-align: center;">
+							<div class="contenido">
+								<span>Cuenta bancaria: <br>
+									<b>{{credito.ReferenciaBancariaCuenta}}</b> 
+								</span><br>
+							</div>
+						</td>
+
+
+						<td style="text-align: center; width: 25%;">
+							<div class="contenido">
+								<span>Telefono del banco: <br>
+									<b>{{credito.ReferenciaBancariaTelefono}}</b> 
+								</span><br>
+							</div>
+						</td>
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+	</table>
+
+
+    <div class="info">
+		<p style="text-align: center; font-size: 20px;">REFERENCIAS COMERCIALES</p>
+	</div>
+
+
+    <table style="width: 100%;">
+		<tr class="top">
+			<td colspan="2">
+				<table style="width: 100%;">
+					<tr>
+
+						<td style="width: 25%; text-align: left;">
+							<div class="contenido">
+								<span>Nombre de la referencia: <br>
+									<b>{{credito.ReferenciaNombrePersonal}}</b> 
+									</span><br>
+							</div>
+                            <div class="contenido">
+								<span>Nombre de la referencia(2): <br>
+									<b>{{credito.ReferenciaNombrePersona2}}</b> 
+									</span><br>
+							</div>
+                            
+						</td>
+
+						<td class="title" style="width: 25%; text-align: center;">
+							<div class="contenido">
+								<span>Dirección de la referencia: <br>
+									<b>{{credito.ReferenciaDireccionPersonal}}</b> 
+								</span><br>
+							</div>
+                            <div class="contenido">
+								<span>Dirección de la referencia(2): <br>
+									<b>{{credito.ReferenciaDireccionPersona2}}</b> 
+								</span><br>
+							</div>
+                            
+						</td>
+
+
+						<td style="text-align: center; width: 25%;">
+							<div class="contenido">
+								<span>Telefono de la referencia: <br>
+									<b>{{credito.ReferenciaTelefonoPersonal}}</b> 
+								</span><br>
+                                <span>Telefono de la referencia(2): <br>
+									<b>{{credito.ReferenciaTelefonoPersona2}}</b> 
+								</span><br>
+                                
+							</div>
+						</td>
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

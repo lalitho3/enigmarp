@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es-mx">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <!--Google fonts POPPINS-->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!--Font awesome icons-->
+    <link rel="stylesheet" href="{% static 'adminlte/plugins/fontawesome/css/all.min.css' %}">
+    <!--Aos Js-->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!--Adminlte css-->
+    <link rel="stylesheet" href="{% static 'adminlte/dist/css/adminlte.min.css' %}">
+    <!-- Css personalizado-->
+    <link rel="stylesheet" href="{% static 'resources/css/main.css' %}">
+    {% block head %}
+      
+    {% endblock head %}
+</head>
+<body>
+    {% block content %}
+      
+    {% endblock content %}
+    <!--Jquery-->
+    <script src="{% static 'adminlte/plugins/jquery/jquery.min.js' %}"></script>
+    <!--Bootstrap bundle js-->
+    <script src="{% static 'adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!--Adminlte js-->
+    <script src="{% static 'adminlte/dist/js/adminlte.min.js' %}"></script>
+    <!--Aos Js-->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    {% block scripts %}
+      
+    {% endblock scripts %}
+</body>
+</html>

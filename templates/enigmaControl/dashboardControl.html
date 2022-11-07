@@ -1,0 +1,226 @@
+{% extends "baseDashboard.html" %}
+
+{% load static %}
+
+{% block content %}
+
+  
+
+  <div class="main-content" data-aos="fade-down">
+    <p class="text-center h2">Modulo de control de {{user.username}}</p>
+    <div class="container">
+        <div class="row text-center my-3">
+            <div class="col-lg-4 col-12">
+                <div class="small-box bg-success shadow-lg">
+                    <div class="inner">
+                        <h3>{{visitas}}<sup style="font-size: 20px"></sup></h3>
+                        <p>Visitas registradas</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-12">
+                <div class="small-box bg-primary shadow-lg">
+                    <div class="inner">
+                        <h3>{{reportes}}<sup style="font-size: 20px"></sup></h3>
+                        <p>Reportes registrados</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-12">
+                <div class="small-box bg-indigo shadow-lg">
+                    <div class="inner">
+                        <h3>0<sup style="font-size: 20px"></sup></h3>
+                        <p>Presupuestos</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col-lg-4 col-12">
+                <div class="card text-center" >
+                    <div class="card-header">
+                      Registrar nueva visita
+                      <i class="fas fa-file"></i>
+                    </div>
+                    <div class="card-body">
+                      <p class="card-text text-center">Cada que se registre una nueva visita recurre a llenar este formato.</p>
+                      <a href="{% url 'enigmaControl:crearVisita' %}" class="btn btn-primary">¡Vamos!</a>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-lg-4 col-12">
+                <div class="card text-center" >
+                    <div class="card-header">
+                      Registrar nuevo reporte
+                      <i class="fas fa-file"></i>
+                    </div>
+                    <div class="card-body">
+                      <p class="card-text text-center">Cada que se registre un nuevo reporte recurre a llenar este formato.</p>
+                      <a href="{% url 'enigmaControl:crearReporte' %}" class="btn btn-primary">¡Vamos!</a>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-lg-4 col-12">
+                <div class="card text-center" >
+                    <div class="card-header">
+                      Crear nuevo presupuesto
+                      <i class="fas fa-file"></i>
+                    </div>
+                    <div class="card-body">
+                      <p class="card-text text-center">Crea un nuevo presupuesto mensual</p>
+                      <a href="{% url 'enigmaControl:presupuestos' %}" class="btn btn-primary">¡Vamos!</a>
+                    </div>
+                  </div>
+              </div>
+        </div>
+
+        <div class="table-responsive">
+            <p class="text-center h2 my'3">Control de presupuestos</p>
+            <table id="tablaPresupuestos" class="table align-middle mb-5">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Razón social</th>
+                        <th>Objetivo de venta</th>
+                        <th>Real de venta</th>
+                        <th>Objetivo cobranza</th>
+                        <th>Real cobranza</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for presupuesto in presupuestos %}
+                        <tr>
+                            <td>{{presupuesto.periodo}}</td>
+                            <td>{{presupuesto.cliente}}</td>
+                            <td>{{presupuesto.objetivo}}</td>
+                            <td>{{presupuesto.real}}</td>
+                            <td>{{presupuesto.objetivoCobranza}}</td>
+                            <td>{{presupuesto.realCobranza}}</td>
+                            <td>
+                                <a href="{% url 'enigmaControl:editarPresupuesto' presupuesto.pk %}" class="btn btn-primary">
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive">
+            <p class="text-center h2">Registro de visitas</p>
+            <table id="tablaVisitas" class="table align-middle mb-5">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Duración de visita</th>
+                        <th>Nombre</th>
+                        <th>Razón de visita</th>
+                        <th>Observaciones</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for visita in visitasTabla %}
+                        <tr>
+                            <td>{{visita.fecha}}</td>
+                            <td>{{visita.duracionVisita}} Hrs.</td>
+                            <td>{{visita.nombreVisita}}</td>
+                            <td>{{visita.razonVisita}}</td>
+                            <td>{{visita.observaciones}}</td>
+                            <td>
+                                <a href="{% url 'enigmaControl:editarVisita' visita.pk %}" class="btn btn-primary">
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive my-3">
+            <p class="text-center h2">Registro de reportes</p>
+            <table id="tablaReportes" class="table align-middle mb-5">
+                <thead>
+                    <tr>
+                        <th>Fecha de el reporte</th>
+                        <th>Nombre</th>
+                        <th>Notificar reporte a</th>
+                        <th>Razón/observaciones</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reporte in reportesTabla %}
+                        <tr>
+                            <td>{{reporte.fechaReporte}}</td>
+                            <td>{{reporte.nombreReporte}}</td>
+                            <td>{{reporte.notificarReporte}}</td>
+                            <td>{{reporte.descripcionReporte}}</td>
+                            <td>
+                                <a href="{% url 'enigmaControl:editarReporte' reporte.pk %}" class="btn btn-primary">
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+      $(document).ready(function () {
+            $('#tablaVisitas').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                responsive: false,
+            });
+        });
+
+        $(document).ready(function () {
+            $('#tablaReportes').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                responsive: false,
+            });
+        });
+
+        $(document).ready(function () {
+            $('#tablaPresupuestos').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                responsive: false,
+            });
+        });
+  </script>
+{% endblock scripts %}

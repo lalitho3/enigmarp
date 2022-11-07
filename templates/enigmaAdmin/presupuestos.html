@@ -1,0 +1,101 @@
+{% extends "baseDashboard.html" %}
+
+{% load static %}
+
+{% block content %}
+
+  
+
+  <div class="main-content" data-aos="fade-down">
+    <p class="text-center h2">Presupuestos de  {{usuario.username}}</p>
+    <div class="container">
+        <div class="row text-center my-3">
+            <div class="col-lg-4 col-12">
+                <div class="small-box bg-success shadow-lg">
+                    <div class="inner">
+                        <h3>{{visitas}}<sup style="font-size: 20px"></sup></h3>
+                        <p>Visitas registradas</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-12">
+                <div class="small-box bg-primary shadow-lg">
+                    <div class="inner">
+                        <h3>{{reportes}}<sup style="font-size: 20px"></sup></h3>
+                        <p>Reportes registrados</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-12">
+                <div class="small-box bg-indigo shadow-lg">
+                    <div class="inner">
+                        <h3>{{presupuestos.count}}<sup style="font-size: 20px"></sup></h3>
+                        <p>Presupuestos</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div class="table-responsive">
+            <p class="text-center h2 my'3">Control de presupuestos</p>
+            <table id="tablaPresupuestos" class="table align-middle mb-5">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Razón social</th>
+                        <th>Objetivo de venta</th>
+                        <th>Real de venta</th>
+                        <th>Objetivo cobranza</th>
+                        <th>Real cobranza</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for presupuesto in presupuestos %}
+                        <tr>
+                            <td>{{presupuesto.periodo}}</td>
+                            <td>{{presupuesto.cliente}}</td>
+                            <td>{{presupuesto.objetivo}}</td>
+                            <td>{{presupuesto.real}}</td>
+                            <td>{{presupuesto.objetivoCobranza}}</td>
+                            <td>{{presupuesto.realCobranza}}</td>
+                            <td>
+                                <a href="{% url 'enigmaControl:editarPresupuesto' presupuesto.pk %}" class="btn btn-primary">
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+     
+        $(document).ready(function () {
+            $('#tablaPresupuestos').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                responsive: false,
+            });
+        });
+  </script>
+{% endblock scripts %}

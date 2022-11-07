@@ -1,0 +1,79 @@
+{% extends "baseDashboard.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="main-container mb-2" data-aos="fade-right">
+    <p class="text-center h2">{{subtitle}}</p>
+    <div class="container">
+        <form method="post" class="row g-3 my-3">
+            {% csrf_token %}
+            
+            <div class="col-lg-6 mb-3">
+                <label class="form-label">Fecha de la visita</label>
+                {% render_field form.fecha class="form-control" placeholder="Ingresa una fecha" id="datepicker" %}
+            </div>
+
+            <div class="col-lg-6 mb-3">
+                <label class="form-label">Duración de la visita</label>
+                {% render_field form.duracionVisita class="form-control" placeholder="Ingresa la duración de la visita (12:00:00)" %}
+            </div>
+
+            <div class="col-lg-6 mb-3">
+                <label class="form-label">Nombre de la visita</label>
+                {% render_field form.nombreVisita class="form-control" placeholder="Ingresa el nombre de la visita" %}
+            </div>
+
+            <div class="col-lg-6 mb-3">
+                <label class="form-label">Razón de la visita</label>
+                {% render_field form.razonVisita class="form-control" placeholder="Ingresa la razón de la visita" %}
+            </div>
+
+            <div class="col-lg-6 mb-3">
+                <label class="form-label">Observaciones</label>
+                {% render_field form.observaciones class="form-control" placeholder="Introduce aquí tus observaciones" %}
+            </div>
+
+            <div class="col-lg-6 mt-4 text-center">
+                <button type="submit" class="btn btn-primary">Guardar registro</button>
+            </div>
+        
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block scripts %}
+  <script>    
+    $('#datepicker').daterangepicker({
+        singleDatePicker: true,
+        locale: {
+            format: 'DD/MMM/YYYY',
+            daysOfWeek: [
+            "Do",
+            "Lu",
+            "Mar",
+            "Mie",
+            "Jue",
+            "Vie",
+            "Sab"
+        ],
+        monthNames: [
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Octubre",
+            "Noviembre",
+            "Diciembre"
+        ],
+        }
+    });
+  </script>
+{% endblock scripts %}

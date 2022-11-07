@@ -1,0 +1,369 @@
+{% extends "baseDashboard.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block header %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+{% endblock header %}
+
+{% block content %}
+        <div id="clientesStepper" class="bs-stepper">
+          <div class="bs-stepper-header" role="tablist">
+            <!-- your steps here -->
+            <div class="step" data-target="#logins-part">
+              <button type="button" class="step-trigger" role="tab" aria-controls="logins-part" id="logins-part-trigger">
+                <span class="bs-stepper-circle">1</span>
+                <span class="bs-stepper-label">Información personal</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#information-part">
+              <button type="button" class="step-trigger" role="tab" aria-controls="information-part" id="information-part-trigger">
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label">Condiciones comerciales</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#thirdSection">
+              <button type="button" class="step-trigger" role="tab" aria-controls="thirdSection" id="thirdSection-trigger">
+                <span class="bs-stepper-circle">3</span>
+                <span class="bs-stepper-label">Relación de personal</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#fourthSection">
+              <button type="button" class="step-trigger" role="tab" aria-controls="fourthSection" id="fourthSection-trigger">
+                <span class="bs-stepper-circle">4</span>
+                <span class="bs-stepper-label">Información del propietario</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#fiveSection">
+              <button type="button" class="step-trigger" role="tab" aria-controls="fiveSection" id="fiveSection-trigger">
+                <span class="bs-stepper-circle">5</span>
+                <span class="bs-stepper-label">Referencias</span>
+              </button>
+            </div>
+          </div>
+          <div class="bs-stepper-content">
+            <div class="container">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                      <div class="row">
+                        <div class="col-md-2 mb-2">
+                            <label for="codigo" class="form-label">Código</label>
+                            {% render_field form.Codigo class="form-control" placeholder="Código" id="codigo" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="razonsocial" class="form-label">Razón Social<span style="color: red;">*</span></label>
+                            {% render_field form.RazonSocial class="form-control" placeholder="Razón Social" id="razonsocial" %}
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label for="rfc" class="form-label">RFC<span style="color: red;">*</span></label>
+                            {% render_field form.Rfc class="form-control" placeholder="RFC" id="rfc" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="nombrec" class="form-label">Nombre comercial<span style="color: red;">*</span></label>
+                            {% render_field form.NombreComercial class="form-control" placeholder="Nombre Comercial" id="nombrec" %}
+                        </div>
+                        <div class="col-md-2 col-sm-12 mb-2">
+                            <label for="CRuta" class="form-label">Código de Ruta</label>
+                            {% render_field form.CodRuta class="form-control" placeholder="Código de Ruta" id="CRuta" %}
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label for="CA" class="form-label">Código de Agente</label>
+                            {% render_field form.CodAgente class="form-control" placeholder="Código de Agente" id="CA" %}
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label for="NA" class="form-label">Nombre de Agente</label>
+                            {% render_field form.NombreAgente class="form-control" placeholder="Nombre de Agente" id="NA" %}
+                        </div>
+                        <div class="col-md-5 mb-2">
+                            <label for="DF" class="form-label">Calle</label>
+                            {% render_field form.DireccionFiscal class="form-control" placeholder="Dirección" id="DF" %}
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label for="NEX" class="form-label">Num. Ext</label>
+                            {% render_field form.NumExt class="form-control" placeholder="Ext" id="NEX" %}
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label for="NIT" class="form-label">Num. Int</label>
+                            {% render_field form.NumInt class="form-control" placeholder="Int" id="NIT" %}
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label for="CPT" class="form-label">Código postal<span style="color: red;">*</span></label>
+                            {% render_field form.CodigoPostal class="form-control" placeholder="Codigo Postal" id="CPT" %}
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label for="ER" class="form-label">Estado</label>
+                            {% render_field form.Estado class="form-control" placeholder="Estado de la República" id="ER" %}
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label for="MC" class="form-label">Municipio</label>
+                            {% render_field form.Municipio class="form-control" placeholder="Municipio o Localidad" id="MC" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="CLO" class="form-label">Colonia</label>
+                            {% render_field form.Colonia class="form-control" placeholder="Municipio o Localidad" id="CLO" %}
+                        </div>
+                        <div class="col-md-8 mb-2">
+                            <label for="DPV" class="form-label">Dirección Punto de venta</label>
+                            {% render_field form.PuntoVenta class="form-control" placeholder="Dirección" id="DPV" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="CE" class="form-label">Correo Electronico<span style="color: red;">*</span></label>
+                            {% render_field form.CorreoElectronico class="form-control" placeholder="Correo Electronico" id="CE" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="NT" class="form-label">Numero Telefónico</label>
+                            {% render_field form.Telefono class="form-control" placeholder="Telefono" id="NT" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="NT" class="form-label">Segundo numero Telefónico</label>
+                            {% render_field form.Telefono2 class="form-control" placeholder="Telefono" id="NT" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="FAX" class="form-label">Fax</label>
+                            {% render_field form.Fax class="form-control" placeholder="Fax" id="FAX" %}
+                        </div>
+                      </div>
+                      <a  class="btn btn-primary my-4" onclick="stepper.next()">Siguiente</a>
+                    </div>
+        
+                    <div id="information-part" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
+                      <div class="row">
+                        <div class="col-md-3 mb-2">
+                            <label for="LP" class="form-label">lista de Precios</label>
+                            {% render_field form.ListaPrecios class="form-control" placeholder="Lista de Precios" id="LP" %}
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label for="DG" class="form-label">Descuento General (%)</label>
+                            {% render_field form.DescuentoGeneral class="form-control" placeholder="Descuento General" id="DG" %}
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label for="PLZ" class="form-label">Plazo</label>
+                            {% render_field form.Plazo class="form-control" placeholder="Plazo" id="PLZ" %}
+                        </div>
+                        <div class="col-md-3 mb-1">
+                            <label for="VEC" class="form-label">Descuentos especiales por linea</label>
+                            {% render_field form.DescuentosLinea class="form-control" placeholder="Descuento" id="VEC" %}
+                        </div>
+                        <div class="col-md-3 mb-1">
+                            <label for="LDC" class="form-label">Línea de Crédito</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                                {% render_field form.LineaCredito class="form-control" placeholder="Monto de Crédito" id="LDC" %}
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-1">
+                            <label for="DPP" class="form-label">Descuento Pronto Pago(%)</label>
+                            {% render_field form.DescuentoPronto class="form-control" placeholder="Descuento" id="DPP" %}
+                        </div>
+                        <div class="col-md-3 mb-1">
+                            <label for="IMM" class="form-label">Interes Moratorio(%)</label>
+                            {% render_field form.InteresMoratorio class="form-control" placeholder="Interes" id="IMM" %}
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label for="FLT" class="form-label">Fletera</label>
+                            {% render_field form.Fletera class="form-control" placeholder="Fletera" id="FLT" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="DIRFLET" class="form-label">Dirección de la Fletera</label>
+                            {% render_field form.DireccionFletera class="form-control" placeholder="Dirección" id="DIRFLET" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="NUMFLET" class="form-label">Número de la Fletera</label>
+                            {% render_field form.TelefonoFletera class="form-control" placeholder="Número" id="NUMFLET" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="CONTFLET" class="form-label">Contacto de la Fletera</label>
+                            {% render_field form.ContactoFletera class="form-control" placeholder="Contacto" id="CONTFLET" %}
+                        </div>
+                      </div>
+                      <a  class="btn btn-primary my-4" onclick="stepper.previous()">Anterior</a>
+                      <a  class="btn btn-primary my-4" onclick="stepper.next()">Siguiente</a>
+                    </div>
+      
+                    <div id="thirdSection" class="content" role="tabpanel" aria-labelledby="thirdSection-trigger">
+                      <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <label for="PP" class="form-label">Propietario</label>
+                            {% render_field form.Propietario class="form-control" placeholder="Nombre del Propietario" id="PP" %}
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <label for="GT" class="form-label">Gerente</label>
+                            {% render_field form.Gerente class="form-control" placeholder="Nombre del Gerente" id="GT" %}
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label for="PEC" class="form-label">Persona Encargada de Compras</label>
+                            {% render_field form.PersonaCompras class="form-control" placeholder="Nombre del Encargad@ en Compras" id="PEC" %}
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label for="PEV" class="form-label">Persona Encargada de Ventas</label>
+                            {% render_field form.PersonaVentas class="form-control" placeholder="Nombre del Encargad@ en Ventas" id="PEV" %}
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label for="PEP" class="form-label">Persona Encargada de Pagos</label>
+                            {% render_field form.PersonaPagos class="form-control" placeholder="Nombre del Encargad@ en Pagos" id="PEP" %}
+                          </div>
+                      </div>
+      
+                      <a  class="btn btn-primary my-4" onclick="stepper.previous()">Anterior</a>
+                      <a  class="btn btn-primary my-4" onclick="stepper.next()">Siguiente</a>
+                    </div>
+                    <div id="fourthSection" class="content" role="tabpanel" aria-labelledby="fourthSection-trigger">
+                      <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <label for="DDP" class="form-label">Nombre del Propietario</label>
+                            {% render_field form.Propietario class="form-control" placeholder="Propietario" id="DDP" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="TDPP" class="form-label">Telefono Celular<span style="color: red;">*</span></label>
+                            {% render_field form.TelefonoPropietario class="form-control" placeholder="Telefono" id="TDPP" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="FDPP" class="form-label">Correo electronico<span style="color: red;">*</span></label>
+                            {% render_field form.FaxPropietarion class="form-control" placeholder="Correo electronico" id="FDPP" %}
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label for="DDPP" class="form-label">Dirección del propietario</label>
+                            {% render_field form.Direccion class="form-control" placeholder="Dirección" id="DDPP" %}
+                        </div>
+                      </div>
+                      <a  class="btn btn-primary my-4" onclick="stepper.previous()">Anterior</a>
+                      <a class="btn btn-primary my-4" onclick="stepper.next()">Siguiente</a>
+                    </div>
+                    <div id="fiveSection" class="content" role="tabpanel" aria-labelledby="fiveSection-trigger">
+                      <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <label for="RefComer" class="form-label">Nombre de la Referencia(1)<span style="color: red;">*</span></label>
+                            {% render_field form.ReferenciaNombre class="form-control" placeholder="Nombre" id="RefComer" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="ConRef" class="form-label">Contacto de la Referencia(1)<span style="color: red;">*</span></label>
+                            {% render_field form.ReferenciaContacto class="form-control" placeholder="Contacto" id="ConRef" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="NumRef" class="form-label">Numero de la referencia(1)<span style="color: red;">*</span></label>
+                            {% render_field form.ReferenciaTelefono class="form-control" placeholder="Numero" id="NumRef" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="RefComer2" class="form-label">Nombre de la Referencia(2)</label>
+                            {% render_field form.ReferenciaNombre2 class="form-control" placeholder="Nombre" id="RefComer2" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="ConRef2" class="form-label">Contacto de la Referencia(2)</label>
+                            {% render_field form.ReferenciaContacto2 class="form-control" placeholder="Contacto" id="ConRef2" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="NumRef2" class="form-label">Numero de la referencia(2)</label>
+                            {% render_field form.ReferenciaTelefono2 class="form-control" placeholder="Numero" id="NumRef2" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="RefComer3" class="form-label">Nombre de la Referencia(3)</label>
+                            {% render_field form.ReferenciaNombre3 class="form-control" placeholder="Nombre" id="RefComer3" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="ConRef3" class="form-label">Contacto de la Referencia(3)</label>
+                            {% render_field form.ReferenciaContacto3 class="form-control" placeholder="Contacto" id="ConRef3" %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="NumRef3" class="form-label">Numero de la referencia(3)</label>
+                            {% render_field form.ReferenciaTelefono3 class="form-control" placeholder="Numero" id="NumRef3" %}
+                        </div>
+                        <div class="col-md-12 my-2 d-flex justify-content-center bg-primary text-white">
+                            <h4>Referencia Bancaria</h4>
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label for="RefBanc" class="form-label">Nombre del Banco</label>
+                            {% render_field form.ReferenciaBancariaBanco class="form-control" placeholder="Nombre" id="RefBanc" %}
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label for="ContB" class="form-label">Cuenta Bancaria</label>
+                            {% render_field form.ReferenciaBancariaCuenta class="form-control" placeholder="Cuenta bancaria" id="ContB" %}
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label for="NumB" class="form-label">Numero del banco</label>
+                            {% render_field form.ReferenciaBancariaTelefono class="form-control" placeholder="Numero" id="NumB" %}
+                          </div>
+                    
+                          <div class="col-md-12 my-2 d-flex justify-content-center bg-primary text-white">
+                            <h4>Referencias Personales</h4>
+                          </div>
+                    
+                          <div class="col-md-4 mb-2">
+                            <label for="REFPER" class="form-label">Nombre de la Referencia(1)</label>
+                            {% render_field form.ReferenciaNombrePersonal class="form-control" placeholder="Nombre" id="REFPER" %}
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label for="REFPERCON" class="form-label">Dirección de la Referencia(1)</label>
+                            {% render_field form.ReferenciaDireccionPersonal class="form-control" placeholder="Dirección" id="REFPERCON" %}
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label for="REFPERNUM" class="form-label">Numero de la referencia(1)</label>
+                            {% render_field form.ReferenciaTelefonoPersonal class="form-control" placeholder="Numero" id="REFPERNUM" %}
+                          </div>
+                    
+                          <div class="col-md-4 mb-2">
+                            <label for="REFPER2" class="form-label">Nombre de la Referencia(2)</label>
+                            {% render_field form.ReferenciaNombrePersona2 class="form-control" placeholder="Nombre" id="REFPER2" %}
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label for="REFPERCON2" class="form-label">Dirección de la Referencia(2)</label>
+                            {% render_field form.ReferenciaDireccionPersona2 class="form-control" placeholder="Dirección" id="REFPERCON2" %}
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label for="REFPERNUM2" class="form-label">Numero de la referencia(2)</label>
+                            {% render_field form.ReferenciaTelefonoPersona2 class="form-control" placeholder="Numero" id="REFPERNUM2" %}
+                          </div>
+                    
+                          <div class="col-md-4 mb-2">
+                            <label for="REFPER3" class="form-label">Nombre de la Referencia(3)</label>
+                            {% render_field form.ReferenciaNombrePersona3 class="form-control" placeholder="Nombre" id="REFPER3" %}
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label for="REFPERCON3" class="form-label">Dirección de la Referencia(3)</label>
+                            {% render_field form.ReferenciaDireccionPersona3 class="form-control" placeholder="Dirección" id="REFPERCON3" %}
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label for="REFPERNUM3" class="form-label">Numero de la referencia(3)</label>
+                            {% render_field form.ReferenciaTelefonoPersona3 class="form-control" placeholder="Numero" id="REFPERNUM3" %}
+                          </div>
+                          <div class="col-md-12 mb-2">
+                            <label for="DOCS" class="form-label">Seleccione los documentos que recibió</label>
+                            {% render_field form.DocumentosEntregados class="form-check" placeholder="Numero" id="DOCS" %}
+                          </div>
+          
+                      </div>
+                      
+                      <a  class="btn btn-primary my-4" onclick="stepper.previous()">Anterior</a>
+                      <button type="submit" class="btn btn-primary my-4 mx-auto">Guardar Datos</button>
+      
+                    </div>
+                  </form>
+            </div>
+          </div>
+
+  
+
+                           
+
+  
+                        
+                    
+  {% block scripts %}
+
+  <script>
+    var stepper = new Stepper(document.querySelector("#clientesStepper"),{
+      animation : true,
+      linear: false
+    })
+
+    
+  </script>
+  
+  {% endblock scripts %}
+
+{% endblock content %}

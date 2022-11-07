@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es-mx">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <!--Google fonts POPPINS-->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!--Font awesome icons-->
+    <link rel="stylesheet" href="{% static 'adminlte/plugins/fontawesome/css/all.min.css' %}">
+    <!--Aos Js-->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!--Intro js-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/5.1.0/introjs.min.css">
+    <!--Date range picker css-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <!--Datatables css-->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <!--Bs stepper-->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+    <!--Select 2-->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!--Adminlte css-->
+    <link rel="stylesheet" href="{% static 'adminlte/dist/css/adminlte.min.css' %}" type="">
+    <!-- Css personalizado-->
+    <link rel="stylesheet" href="{% static 'resources/css/main.css' %}">
+    {% block head %}
+      
+    {% endblock head %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <div class="w-100">      
+        <!-- Content Wrapper. Contains page content -->
+        <div class="container-fluid">
+          <!-- Content Header (Page header) -->
+          <div class="content-header" data-aos="fade-up">
+              <div class="row mb-2">
+                <div class="d-flex col-sm-4 align-items-center">
+                  <img src="{% static 'resources/img/rubik.svg' %}" alt="LOGO-ENIGMA-RUBIK" srcset="" width="35px">
+                  <h1 class="m-0 mx-3">Enigma</h1>
+                </div>
+                <div class="col-sm-8 py-2 d-none d-lg-block">
+                  <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active"><a href="{% url 'multipolimeros:dashboard' %}">Multipolimeros</a></li>
+                    <li class="breadcrumb-item"><a href="">{{version}}</a></li>
+                    <li class="breadcrumb-item active">{{user.get_full_name}}</li>
+                    <li class="breadcrumb-item active">Ultima conexión: {{user.last_login}}</li>
+                  </ol>
+                </div>
+              </div>
+          </div>
+
+
+          
+
+          {% block content %}
+            
+          {% endblock content %}
+         
+         
+         
+          <br>
+          <br>
+          <br>
+          <br>
+          <nav class="navbar fixed-bottom navbar-expand-lg bg-white py-1">
+            <div class="container-fluid d-flex m-0 py-2 justify-content-center" >
+                <ul class="nav nav-pills text-center" data-title="Barra de navegación" data-intro="La barra de navegación contiene los mismos elementos que los módulos ya mencionados, siempre estará disponible cuando navegues en Enigma, facilitándote el traslado entre secciones">
+                  <li class="nav-item bg-primary rounded mx-2">
+                    <a href="{% url 'enigmaErp:dashboard' %}" class="nav-link py-2" aria-current="page" title="Inicio" data-bs-toggle="tooltip" data-bs-placement="top">
+                        <i class="fas fa-home"></i>
+                    </a>
+                  </li>  
+                  <li class="nav-item bg-primary rounded mx-2">
+                        <a href="{% url 'enigmaVentas:dashboardVentas' %}" class="nav-link py-2" aria-current="page" title="Ventas" data-bs-toggle="tooltip" data-bs-placement="top">
+                            <i class="fas fa-coins"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item bg-primary rounded mx-2">
+                        <a href="{% url 'enigmaControl:indexControl' %}" class="nav-link py-2" aria-current="page" title="Control" data-bs-toggle="tooltip" data-bs-placement="top">
+                            <i class="fas fa-file"></i>
+                        </a>
+                    </li>
+                    {% if request.user.is_superuser %}
+                    <li class="nav-item bg-primary rounded mx-2">
+                        <a href="{% url 'enigmaAdmin:dashboardAdmin' %}" class="nav-link py-2" aria-current="page" title="Administrador" data-bs-toggle="tooltip" data-bs-placement="top">
+                            <i class="fas fa-stream"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item bg-danger rounded mx-2" data-title="Cerrar sesión" data-intro="Este botón sirve para cerrar sesión, asegúrate de guardar tus datos antes de abandonar Enigma, esto es todo, ya has comprendido como utilizar el sistema ¡Que tengas un día lleno de éxito!">
+                        <a href="{% url 'auth:logout' %}" class="nav-link py-2" aria-current="page" title="Cerrar sesión" data-bs-toggle="tooltip" data-bs-placement="top">
+                            <i class="fa fa-user-times"></i>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+          </nav>
+
+        </div>
+    </div>
+      <!-- ./wrapper -->
+    <!--Jquery-->
+    <script src="{% static 'adminlte/plugins/jquery/jquery.min.js' %}"></script>
+    <!--BS STEPPER-->
+    <script src="//cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+    <!--Bootstrap bundle js-->
+    <script src="{% static 'adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!--Adminlte js-->
+    <script src="{% static 'adminlte/dist/js/adminlte.min.js' %}"></script>
+    <!--Aos Js-->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <!--Sweet alert-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% if messages %}
+      {% for m in messages %}
+              <script>
+                Swal.fire({
+                  icon: '{{m.tags}}',
+                  title: '{{m}}',
+                  text: "{{m}}",
+                  showConfirmButton: false,
+                  timer: 3000,
+                });
+              </script>
+      {% endfor %}
+    {% endif %}
+    <!--Datatables-->
+    <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"></script>
+    <!--Chart js-->
+    <script src="{% static 'adminlte/plugins/chartjs/Chart.min.js'  %}"></script>
+    <!--Date picker js-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <!--Aos init-->
+    <script>
+      AOS.init();
+    </script>
+    <!--Intro js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/5.1.0/intro.min.js"></script>
+    <!--select2 js-->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
+    <script>
+      introJs().setOptions({
+        "dontShowAgain" : true,
+        "dontShowAgainLabel" : "No mostrar de nuevo",
+        "nextLabel" : "Siguiente",
+        "prevLabel" : "Anterior",
+        "doneLabel" : "Hecho",
+      }).start();
+    </script>
+    {% block scripts %}
+      
+    {% endblock scripts %}
+</body>
+</html>

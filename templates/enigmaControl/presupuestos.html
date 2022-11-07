@@ -1,0 +1,367 @@
+{% extends "baseDashboard.html" %}
+
+{% load humanize %}
+
+{% load static %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<h1 class="text-center py-2">Presupuestos</h1>
+  <div class="container">
+    <form method="POST" class="row my-4">
+        {% csrf_token %}
+        <div class="col-lg-10 mb-3">
+            <label class="form-label">Asigna nombre de mes al PRESUPUESTO:</label>
+            {% render_field form.mesPresupuesto class="form-control" placeholder="Mes del presupuesto" id="mes" %}
+        </div>
+        <div class="col-lg-2 mt-4">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+  </div>
+
+  <h2 class="text-center">Presupuestos disponibles</h2>
+
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">Mes del presupuesto</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for presupuesto in presupuestos %}
+                        <tr>
+                            <td><strong>{{presupuesto.mesPresupuesto}}</strong></td>
+                            <td>
+                                <a href="{% url 'enigmaControl:eliminarPresupuesto' presupuesto.id %}"
+                                    class="btn btn-danger">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </a>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="text-center">Filtrar datos por mes</h2>
+
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <form method="POST" class="row my-4">
+                    {% csrf_token %}
+                    <select name="filto" id="filtro" class="form-control">
+                        <option value="0">Selecciona un presupuesto</option>
+                        {% for presupuesto in presupuestos %}
+                        <option value="{{presupuesto.id}}" >{{presupuesto.mesPresupuesto}}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                          <th scope="col">Objetivo de ventas</th>
+                          <th scope="col">Real de ventas</th>
+                          <th scope="col">Objetivo de cobranza</th>
+                          <th scope="col">Real de cobranza</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tableFilter">
+                        
+                      </tbody>
+                    
+                </table>
+            </div>
+
+            <div id="filterRow" class=" row col-lg-12">
+                
+            </div>
+
+            <canvas id="filterGrafic" width="400" height="100" class="mb-5"></canvas>
+
+        </div>
+    </div>
+
+    <div class="mx-auto text-center my-3 p-3">
+        <a href="{% url 'enigmaControl:crearPresupuesto' %}" class="btn btn-primary">
+            Crear presupuesto directo
+        </a>
+    </div>
+
+    <div class="container-fluid my-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-striped text-center" id="myTable">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nombre del presupuesto</th>
+                                <th>Razón social</th>
+                                <th>Objetivo ventas</th>
+                                <th>Real ventas</th>
+
+                                <th>PORCENTAJE VENTAS</th>
+
+                                <th>Objetivo Cobranza</th>
+                                <th>Real cobranza</th>
+                                
+                                <th>PORCENTAJE COBRANZA</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in presupuestosTabla %}
+                            <tr>
+                                <td><strong>{{p.presupuesto}}</strong></td>          
+                                <td>{{p.razonSocial}}</td>
+                                <td>$ {{p.ventasObjetivo|intcomma}}</td>
+                                <td>$ {{p.ventasRealizadas|intcomma}}</td>
+
+                                {% if p.getVentasPercentage <= 30 %}
+                                  <td class="bg-danger rounded">{{p.getVentasPercentage}}%</td>
+                                {% elif p.getVentasPercentage <= 60 %}
+                                  <td class="bg-primary rounded">{{p.getVentasPercentage}}%</td>
+                                {% elif p.getVentasPercentage >= 90 %}
+                                  <td class="bg-success rounded">{{p.getVentasPercentage}}%</td>
+                                {% endif %}
+
+
+                                <td>$ {{p.cobranzaObjetivo|intcomma}}</td>
+
+
+                                <td>$ {{p.cobranzaRealizada|intcomma}}</td>
+
+                                {% if p.getCobranzaPercentage <= 30 %}
+                                  <td class="bg-danger rounded">{{p.getCobranzaPercentage}}%</td>
+                                {% elif p.getCobranzaPercentage <= 60 %}
+                                  <td class="bg-primary rounded">{{p.getCobranzaPercentage}}%</td>
+                                {% elif p.getCobranzaPercentage >= 90 %}
+                                  <td class="bg-success rounded">{{p.getCobranzaPercentage}}%</td>
+                                {% endif %}
+
+
+                               
+
+                               
+
+                                
+    
+                                <td>
+                                    <a href="{% url 'enigmaControl:editarPresupuesto' p.id %}"
+                                        class="btn btn-primary">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <a href="{% url 'enigmaControl:eliminarPresupuestoTabla' p.id %}" class="btn btn-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontraron registros",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                "search": "Buscar",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+        });
+    } );
+
+    // Filtrado de datos
+
+    const btnFiltrar = document.querySelector('#filtro');
+
+    const usuario = {{userId}};
+
+    btnFiltrar.addEventListener('change', async (e)=>{
+        const response = await fetch('/api/presupuestos/')
+        const data = await response.json()
+        const target = e.target.value
+        const presupuestos = data.filter(presupuesto => presupuesto.presupuesto === parseInt(target) && presupuesto.usuario === usuario)
+        ShowData(presupuestos)
+
+    })
+
+    const table = document.querySelector('#tableFilter')
+
+    const filterRow = document.querySelector('#filterRow')
+
+    const grafic = document.querySelector('#filterGrafic').getContext('2d')
+
+    function ShowData(presupuestos){
+
+        filterRow.innerHTML = ''
+
+        table.innerHTML = ''
+
+        grafic.innerHTML = ''
+        
+
+        const totalVentasObjetivo = presupuestos.reduce((acc, item) => acc + item.ventasObjetivo, 0)
+
+        const totalVentasRealizadas = presupuestos.reduce((acc, item) => acc + item.ventasRealizadas, 0)
+
+        const totalCobranzaObjetivo = presupuestos.reduce((acc, item) => acc + item.cobranzaObjetivo, 0)
+
+        const totalCobranzaRealizada = presupuestos.reduce((acc, item) => acc + item.cobranzaRealizada, 0)
+
+        const totalVentasPercentage = (totalVentasRealizadas * 100) / totalVentasObjetivo;
+
+        const totalCobranzaPercentage = (totalCobranzaRealizada * 100) / totalCobranzaObjetivo;
+
+        const tr = document.createElement('tr')
+
+        tr.innerHTML = `
+            <td>$ ${totalVentasObjetivo}</td>
+            <td>$ ${totalVentasRealizadas}</td>
+            <td>$ ${totalCobranzaObjetivo}</td>
+            <td>$ ${totalCobranzaRealizada}</td>
+        `
+
+        table.appendChild(tr)
+
+        const card1 = document.createElement('div')
+
+        card1.classList.add('col-lg-6')
+
+        card1.innerHTML = `
+                <div class="small-box bg-primary shadow-lg text-center">
+                    <div class="inner">
+                        <h3 id="cobranzaObjetivo">${totalVentasPercentage.toFixed(2) + '%'}<sup style="font-size: 20px"></sup></h3>
+                        <p>Porcentaje de VENTAS</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                </div>
+        `
+
+        const card2 = document.createElement('div')
+
+        card2.classList.add('col-lg-6')
+
+        card2.innerHTML = `
+                <div class="small-box bg-success shadow-lg text-center">
+                    <div class="inner">
+                        <h3 id="cobranzaRealizada">${totalCobranzaPercentage.toFixed(2) + '%'}<sup style="font-size: 20px"></sup></h3>
+                        <p>Porcentaje de COBRANZA</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                </div>
+        `
+
+
+
+        filterRow.appendChild(card1)
+
+        filterRow.appendChild(card2)
+
+        const filterGrafic = new Chart(grafic, {
+            type: 'bar',
+            data: {
+                labels: ['Objetivo de ventas', 'Ventas realizadas', 'Objetivo de cobranza', 'Cobranza realizada'],
+                datasets: [{
+                    label: 'Datos',
+                    data: [totalVentasObjetivo,totalVentasRealizadas, totalCobranzaObjetivo, totalCobranzaRealizada],
+                    backgroundColor: [
+                        'rgba(59, 217, 236, 0.5)',
+                        'rgba(59, 217, 71, 0.5)',
+                        'rgba(255, 61, 42, 0.8)',
+                        'rgba(255, 204, 109, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(59, 217, 236, 0.5)',
+                        'rgba(59, 217, 71, 0.5)',
+                        'rgba(255, 61, 42, 0.8)',
+                        'rgba(255, 204, 109, 0.8)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        })
+
+
+
+        console.log(presupuestos)
+    }
+    // VENTAS
+
+    let objetivo = document.getElementById('objetivoVentas').textContent;
+
+    const objetivoInt = parseInt(objetivo.replace(/[^0-9.-]+/g,""));
+
+    let real = document.getElementById('realVentas').textContent;
+
+    const realInt = parseInt(real.replace(/[^0-9.-]+/g,""));
+
+    const total = (realInt / objetivoInt) * 100;
+
+    const ventasBox = document.getElementById('ventasBox');
+
+    ventasBox.innerText = total.toFixed(1) + '%';
+
+    // COBRANZA
+
+    let objetivoCobranza = document.getElementById('cobranzaObjetivo').textContent;
+
+    const objetivoCobranzaInt = parseInt(objetivoCobranza.replace(/[^0-9.-]+/g,""));
+
+    let realCobranza = document.getElementById('cobranzaReal').textContent;
+
+    const realCobranzaInt = parseInt(realCobranza.replace(/[^0-9.-]+/g,""));
+
+    const totalCobranza = (realCobranzaInt / objetivoCobranzaInt) * 100;
+
+    const cobranzaBox = document.getElementById('cobranzaBox');
+
+    cobranzaBox.innerText = totalCobranza.toFixed(1) + '%';
+
+    
+        
+
+  </script>
+{% endblock scripts %}

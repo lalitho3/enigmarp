@@ -1,0 +1,80 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="es-mx">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicia sesión - Enigma</title>
+    <!--Google fonts POPPINS-->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!--Font awesome icons-->
+    <link rel="stylesheet" href="{% static 'adminlte/plugins/fontawesome/css/all.min.css' %}">
+    <!--Adminlte css-->
+    <link rel="stylesheet" href="{% static 'adminlte/dist/css/adminlte.min.css' %}">
+    <!-- Css personalizado-->
+    <link rel="stylesheet" href="{% static 'resources/css/main.css' %}">
+     <!--Aos Js-->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body class="hold-transition login-page">
+<div class="login-box" data-aos="fade-down">
+  <!-- /.login-logo -->
+ <div class="card card-outline card-primary">
+    <div class="mx-auto pt-2">
+        <img src="{% static 'resources/img/rubik.svg' %}" alt="LOGO-ENIGMA-RUBIK" srcset="" width="70px">
+    </div>
+    <div class="card-body">
+      <p class="login-box-msg">Inicia sesión en <b>Enigma</b></p>
+
+      {% if form.errors %}
+        <div class="bg-danger p-2 my-2 rounded text-center">
+            <p>Usuario y/o contraseña incorrectos</p>
+        </div>
+      {% endif %}
+
+      <form method="post">
+         {% csrf_token %}
+         <div class="input-group mb-3">
+          {% render_field form.username class="form-control" placeholder="Usuario" %}
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+         </div>
+         <div class="input-group mb-3">
+          {% render_field form.password class="form-control" placeholder="Contraseña" %}
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+         </div>
+         <div class="text-center">
+            <button type="submit" class="btn btn-primary">Inicia sesión</button>
+         </div>
+         </div>
+      </form>
+
+      <div class="text-center px-2">
+          <p>Recuerda no compartir tus credenciales de acceso con terceros, esto te puede afectar <b>gravemente</b> </p>
+      </div>
+    <!-- /.card-body -->
+ </div>
+  <!-- /.card -->
+</div>
+    <!--Jquery-->
+    <script src="{% static 'adminlte/plugins/jquery/jquery.min.js' %}"></script>
+    <!--Bootstrap bundle js-->
+    <script src="{% static 'adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!--Adminlte js-->
+    <script src="{% static 'adminlte/dist/js/adminlte.min.js' %}"></script>
+    <!--Aos Js-->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+</body>
+</html>

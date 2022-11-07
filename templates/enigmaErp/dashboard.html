@@ -1,0 +1,99 @@
+{% extends "baseDashboard.html" %}
+
+{% block content %}
+  
+
+<div class="main-content mb-auto" data-aos="fade-down">
+  <p class="text-center h2">Hola {{user.username}}, ¿Qué vamos a hacer hoy?</p>
+  <div class="container" data-title="Bienvenido a ENIGMA" data-intro="En enigma podrás agilizar tus procesos de una manera sumamente intuitiva" data-position="auto">
+      <div class="row mb-auto">
+          <div class="col-lg-4">
+            <div class="card text-center my-5" data-title="Modulo de ventas" data-intro="Con el módulo de ventas podrás realizar tus mantenimientos, editarlos, guardarlos en PDF, compartirlos, también podrás registrar pedidos.">
+                <div class="card-header">
+                  Ventas
+                  <i class="fas fa-coins"></i>
+                </div>
+                <div class="card-body">
+                  <p class="card-text text-center">Mantenimientos de prospectos, clientes, registros de pedidos. </p>
+                  <a href="{% url 'enigmaVentas:dashboardVentas' %}" class="btn btn-primary">¡Vamos!</a>
+                </div>
+              </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="card text-center my-5" data-title="Modulo de control" data-intro="En el módulo de control encontrarás formularios para llevar un mejor registro de lo acontecido, visitas, observaciones, reportes.">
+                <div class="card-header">
+                  Control
+                  <i class="fas fa-file"></i>
+                </div>
+                <div class="card-body">
+                  <p class="card-text text-center">Control de visitas, observaciones, reportes.</p>
+                  <a href="{% url 'enigmaControl:indexControl' %}" class="btn btn-primary">¡Vamos!</a>
+                </div>
+              </div>
+          </div>
+          
+
+          {% if request.user.is_superuser %}
+          <div class="col-lg-4">
+            <div class="card text-center my-5" data-title="Modulo de gráficas" data-intro="En el módulo de administración podrás visualizar los rendimientos, las ventas de los vendedores, tendras acceso a todos los datos globales siempre y cuando seas administrador">
+                <div class="card-header">
+                  Administración
+                  <i class="fas fa-stream"></i>
+                </div>
+                <div class="card-body">
+                  <p class="card-text text-center">Administra la información de los vendedores, consulta sus rendimientos.</p>
+                  <a href="{% url 'enigmaAdmin:dashboardAdmin' %}" class="btn btn-primary">¡Vamos!</a>
+                </div>
+              </div>
+          </div>
+          {% endif %}
+
+      </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <canvas id="myChart" width="400" height="150px"></canvas>
+</div>
+ 
+{% endblock content %}
+
+
+{% block scripts %}
+<script>
+  const ctx = document.getElementById('myChart');
+  const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Mis prospectos', 'Mis clientes', 'Mis créditos', 'Mis pedidos', 'Mis reportes'],
+      datasets: [{
+        label: 'Mis estadisticas',
+        fill: true,
+        data: [{{prospectos.count}}, {{clientes.count}}, {{creditos.count}}, 0, 0],
+        backgroundColor: [
+          'rgba(52, 152, 219,1.0)',
+          'rgba(155, 89, 182,1.0)',
+          'rgba(46, 204, 113,1.0)',
+          'rgba(26, 188, 156,1.0)',
+        ],
+        borderColor: [
+          'rgba(52, 152, 219,1.0)',
+          'rgba(155, 89, 182,1.0)',
+          'rgba(46, 204, 113,1.0',
+          'rgba(26, 188, 156,1.0)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+        scales: {
+            y: {
+              beginingAtZero: true
+            }
+        }
+    }
+  });
+</script>
+{% endblock scripts %}

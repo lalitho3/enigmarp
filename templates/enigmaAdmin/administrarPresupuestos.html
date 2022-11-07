@@ -1,0 +1,444 @@
+{% extends "baseDashboard.html" %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block content %}
+  
+<div class="text-center" data-aos="fade-down">
+    <h1 class="text-center">Presupuestos</h1>
+    <p class="text-center">Estadisticas de presupuestos</p>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <h1 class="text-center">Filtrar totales por mes</h1>
+            <form method="POST" class="row my-4">
+                {% csrf_token %}
+                <select name="filtroTotal" id="filtroTotal" class="form-control">
+                    <option value="0">-- Selecciona un mes --</option>
+                    {% for p in presupuestosMes %}
+                        <option value="{{p.id}}" >{{p.mesPresupuesto}}</option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+
+        <div class="col-lg-3 col-12">
+            <a href="#">
+                <div class="small-box bg-success shadow-sm">
+                    <div class="inner">
+                        <h3 id="OVentas">$ {{ventasObjetivo.ventasObjetivo__sum|intcomma}}</h3>
+                        <p>Objetivo de ventas</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="col-lg-3 col-12">
+            <a href="#">
+                <div class="small-box bg-indigo shadow-sm">
+                    <div class="inner">
+                        <h3 id="RVentas">$ {{ventasRealizadas.ventasRealizadas__sum|intcomma}}</h3>
+                        <p>Real de ventas</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="col-lg-3 col-12">
+            <a href="#">
+                <div class="small-box bg-primary shadow-sm">
+                    <div class="inner">
+                        <h3 id="OCobranza">$ {{cobranzaObjetivo.cobranzaObjetivo__sum|intcomma}}</h3>
+                        <p>Objetivo de cobranza</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="col-lg-3 col-12">
+            <a href="#">
+                <div class="small-box bg-indigo shadow-sm">
+                    <div class="inner">
+                        <h3 id="RCobranza">$ {{cobranzaRealizada.cobranzaRealizada__sum|intcomma}}</h3>
+                        <p>Real de cobranza</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                </div>
+            </a>
+            
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="row" id="row">
+
+        </div>
+    </div>
+
+<div class="container">
+
+    <h1 class="text-center">Desglose de datos</h1>
+
+    <form method="POST" class="row my-4">
+        {% csrf_token %}
+        <select name="filto" id="filtroTabla" class="form-control">
+            <option value="0">-- Selecciona un mes --</option>
+            {% for p in presupuestosMes %}
+                <option value="{{p.id}}" >{{p.mesPresupuesto}}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <table id="presupuestostable" class="table">
+        <thead class="text-center">
+            <tr>
+                <th>Nombre</th>
+                <th>Objetivo ventas</th>
+                <th>Real ventas</th>
+                <th>Avance de ventas</th>
+                <th>Objetivo cobranza</th>
+                <th>Real cobranza</th>
+                <th>Avance de cobranza</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody class="text-center" id="table-body">
+
+        </tbody>
+    </table>
+</div>
+
+
+
+    <div class="container">
+        <h1 class="text-center my-5">Comparar rendimiento</h1>
+        <div class="row">
+            <div class="col-lg-6">
+                <form method="POST" class="row my-4">
+                    {% csrf_token %}
+                    <select name="filto" id="mes1" class="form-control">
+                        <option value="0">-- Selecciona un mes --</option>
+                        {% for p in presupuestosMes %}
+                            <option value="{{p.id}}" >{{p.mesPresupuesto}}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+                <form method="post">
+                    {% csrf_token %}
+                    <select name="opcion1" id="opcion1" class="form-control">
+                        <option value="0">-- Selecciona un usuario --</option>
+                        {% for usuario in usuarios %}
+                            <option value="{{usuario.id}}">{{usuario.get_full_name}}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+
+                <canvas id="opcion1graf" width="400" height="200" class="my-5"></canvas>
+            </div>
+
+            <div class="col-lg-6">
+                <form method="POST" class="row my-4">
+                    {% csrf_token %}
+                    <select name="filto" id="mes2" class="form-control">
+                        <option value="0">-- Selecciona un mes --</option>
+                        {% for p in presupuestosMes %}
+                            <option value="{{p.id}}" >{{p.mesPresupuesto}}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+                <form method="post">
+                    {% csrf_token %}
+                    <select name="opcion2" id="opcion2" class="form-control">
+                        <option value="0">-- Selecciona un usuario --</option>
+                        {% for usuario in usuarios %}
+                            <option value="{{usuario.id}}">{{usuario.get_full_name}}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+
+                <canvas id="opcion2graf" width="400" height="200" class="my-5"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+{% block scripts %}
+
+<script>
+
+
+
+
+    $(document).ready(function () {
+
+            $('#opcion1').select2()
+
+            $('#opcion2').select2()
+
+            $('#mes1').select2()
+
+            $('#mes2').select2()
+
+
+            $('#filtroTabla').change(async function(e){
+                const response = await fetch('/api/usuarios/')
+                const data = await response.json()
+                const mes = Number(e.target.value)
+                const tableBody = document.querySelector('#table-body')
+                while(tableBody.firstChild){
+                    tableBody.removeChild(tableBody.firstChild)
+                }
+
+                data.map(usuario => {
+
+                    const presupuesto = usuario.usuarioPresupuestos
+
+                    const presMes = presupuesto.filter(presupuesto => presupuesto.presupuesto === mes 
+                    && presupuesto.usuario === usuario.id)
+
+                    const ventasObjetivo = presMes.reduce((acc, item) => acc + item.ventasObjetivo, 0)
+
+                    const ventasReal = presMes.reduce((acc, item) => acc + item.ventasRealizadas, 0)
+
+                    const cobranzaObjetivo = presMes.reduce((acc, item) => acc + item.cobranzaObjetivo, 0)
+
+                    const cobranzaReal = presMes.reduce((acc, item) => acc + item.cobranzaRealizada, 0)
+
+                    const ventasPorcentaje = (ventasReal / ventasObjetivo) * 100
+
+                    const cobranzaPorcentaje = (cobranzaReal / cobranzaObjetivo) * 100
+
+                    const options = {
+                        style: 'currency',
+                        currency: 'MXN',
+                        minimumFractionDigits: 2
+                    }
+
+                    return (
+
+                        $('#table-body').append(`
+                            <tr id="table-row">
+                                <td>${usuario.first_name} ${usuario.last_name}</td>
+                                <td>${ventasObjetivo.toLocaleString(options)}</td>
+                                <td>${ventasReal.toLocaleString(options)}</td>
+                                <td class="bg-${ventasPorcentaje <= 50 ? 'danger' : ''}">${ventasPorcentaje.toFixed(2)}%</td>
+                                <td>${cobranzaObjetivo.toLocaleString(options)}</td>
+                                <td>${cobranzaReal.toLocaleString(options)}</td>
+                                <td class="bg-${cobranzaPorcentaje <= 50 ? 'danger' : ''}">${cobranzaPorcentaje.toFixed(2)}%</td>
+                                <td>
+                                    <a href='/administracion/personal/${usuario.id}/' class="btn btn-primary">Ver a detalle</a>
+                                </td>
+                            </tr>
+                        `)
+                    )
+                })
+            })
+
+            $('#filtroTotal').change(async function(e){
+                const mes = Number(e.target.value)
+                const response = await fetch('/api/presupuestos/')
+                const presupuestos = await response.json()
+                const respuesta = presupuestos.filter(presupuesto => presupuesto.presupuesto === mes)
+                setTotales(respuesta)
+            })
+
+            function setTotales(respuesta){
+                const ventasObjetivo = respuesta.reduce((acc, item) => acc + item.ventasObjetivo, 0)
+
+                const ventasReal = respuesta.reduce((acc, item) => acc + item.ventasRealizadas, 0)
+
+                const cobranzaObjetivo = respuesta.reduce((acc, item) => acc + item.cobranzaObjetivo, 0)
+
+                const cobranzaReal = respuesta.reduce((acc, item) => acc + item.cobranzaRealizada, 0)
+
+                console.log(ventasObjetivo, ventasReal, cobranzaObjetivo, cobranzaReal)
+
+                const ventasObjetivoHTML = document.getElementById('OVentas')
+                const ventasRealHTML = document.getElementById('RVentas')
+                const cobranzaObjetivoHTML = document.getElementById('OCobranza')
+                const cobranzaRealHTML = document.getElementById('RCobranza')
+
+                const row = document.getElementById('row')
+
+                const ventasPorcentaje = (ventasReal / ventasObjetivo) * 100
+
+                const cobranzaPorcentaje = (cobranzaReal / cobranzaObjetivo) * 100
+
+                const ventasHtml = `
+                    <div class="col-lg-6 col-12">
+                        <a href="#">
+                            <div class="small-box bg-${ventasPorcentaje <= 50 ? 'danger' : 'success'} shadow-sm">
+                                <div class="inner">
+                                    <h3 id="RVentas">${ventasPorcentaje.toFixed(2)}% Avance de ventas</h3>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-box" style="font-size: 50px;"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-6 col-12">
+                        <a href="#">
+                            <div class="small-box bg-${cobranzaPorcentaje <= 50 ? 'danger' : 'success'} shadow-sm">
+                                <div class="inner">
+                                    <h3 id="RVentas">${cobranzaPorcentaje.toFixed(2)}% Avance de cobranza</h3>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-box" style="font-size: 50px;"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                `
+                
+                row.innerHTML = ventasHtml
+
+                ventasObjetivoHTML.innerHTML = `$ ${ventasObjetivo.toLocaleString()}`
+                ventasRealHTML.innerHTML = `$ ${ventasReal.toLocaleString()}`
+                cobranzaObjetivoHTML.innerHTML = `$ ${cobranzaObjetivo.toLocaleString()}`
+                cobranzaRealHTML.innerHTML = `$ ${cobranzaReal.toLocaleString()}`
+            }
+
+            function showData(presupuestos){
+
+                const totalVentasObjetivo = presupuestos.reduce((acc, item) => acc + item.ventasObjetivo, 0)
+
+                const totalVentasRealizadas = presupuestos.reduce((acc, item) => acc + item.ventasRealizadas, 0)
+
+                const totalCobranzaObjetivo = presupuestos.reduce((acc, item) => acc + item.cobranzaObjetivo, 0)
+
+                const totalCobranzaRealizada = presupuestos.reduce((acc, item) => acc + item.cobranzaRealizada, 0)
+
+                const grafica = document.querySelector('#opcion1graf').getContext('2d');
+
+                const myChart = new Chart(grafica, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Objetivo de ventas', 'Real de ventas', 'Objetivo de cobranza', 'Real de cobranza'],
+                        datasets: [{
+                            label: 'Datos',
+                            data: [totalVentasObjetivo,totalVentasRealizadas, totalCobranzaObjetivo, totalCobranzaRealizada],
+                            backgroundColor: [
+                                'rgba(59, 217, 236, 0.5)',
+                                'rgba(59, 217, 71, 0.5)',
+                                'rgba(255, 61, 42, 0.8)',
+                                'rgba(255, 204, 109, 0.8)'
+                            ],
+                            borderColor: [
+                                'rgba(59, 217, 236, 0.5)',
+                                'rgba(59, 217, 71, 0.5)',
+                                'rgba(255, 61, 42, 0.8)',
+                                'rgba(255, 204, 109, 0.8)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    }
+                })
+            }
+
+            function showData2(presupuestos){
+
+                const totalVentasObjetivo = presupuestos.reduce((acc, item) => acc + item.ventasObjetivo, 0)
+
+                const totalVentasRealizadas = presupuestos.reduce((acc, item) => acc + item.ventasRealizadas, 0)
+
+                const totalCobranzaObjetivo = presupuestos.reduce((acc, item) => acc + item.cobranzaObjetivo, 0)
+
+                const totalCobranzaRealizada = presupuestos.reduce((acc, item) => acc + item.cobranzaRealizada, 0)
+
+                const grafica = document.querySelector('#opcion2graf').getContext('2d');
+
+                const myChart = new Chart(grafica, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Objetivo de ventas', 'Real de ventas', 'Objetivo de cobranza', 'Real de cobranza'],
+                        datasets: [{
+                            label: 'Datos',
+                            data: [totalVentasObjetivo,totalVentasRealizadas, totalCobranzaObjetivo, totalCobranzaRealizada],
+                            backgroundColor: [
+                                'rgba(59, 217, 236, 0.5)',
+                                'rgba(59, 217, 71, 0.5)',
+                                'rgba(255, 61, 42, 0.8)',
+                                'rgba(255, 204, 109, 0.8)'
+                            ],
+                            borderColor: [
+                                'rgba(59, 217, 236, 0.5)',
+                                'rgba(59, 217, 71, 0.5)',
+                                'rgba(255, 61, 42, 0.8)',
+                                'rgba(255, 204, 109, 0.8)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    }
+                })
+            }
+
+            $('#opcion1').change(async function(e){
+                const mes = document.querySelector('#mes1').value
+                const mesFormat = Number(mes)
+                let target = Number(e.target.value)
+                const response = await fetch('/api/presupuestos/')
+                const data = await response.json()
+                const presupuestos = data.filter(presupuesto => presupuesto.usuario === target && presupuesto.presupuesto === mesFormat)
+                showData(presupuestos)
+            })
+
+            $('#mes1').change(async function(e){
+                const mes = Number(e.target.value)
+                let target = document.querySelector('#opcion1').value
+                const targetFormat = Number(target)
+                const response = await fetch('/api/presupuestos/')
+                const data = await response.json()
+                const presupuestos = data.filter(presupuesto => presupuesto.usuario === targetFormat && presupuesto.presupuesto === mes)
+                showData(presupuestos)
+            })
+
+            $('#opcion2').change(async function(e){
+                const mes = document.querySelector('#mes2').value
+                const mesFormat = Number(mes)
+                let target = Number(e.target.value)
+                const response = await fetch('/api/presupuestos/')
+                const data = await response.json()
+                const presupuestos = data.filter(presupuesto => presupuesto.usuario === target && presupuesto.presupuesto === mesFormat)
+                showData2(presupuestos)
+            })
+
+            $('#mes2').change(async function(e){
+                const mes = Number(e.target.value)
+                let target = document.querySelector('#opcion2').value
+                const targetFormat = Number(target)
+                const response = await fetch('/api/presupuestos/')
+                const data = await response.json()
+                const presupuestos = data.filter(presupuesto => presupuesto.usuario === targetFormat && presupuesto.presupuesto === mes)
+                showData2(presupuestos)
+            })
+
+
+        });
+
+
+
+</script>
+  
+{% endblock scripts %}

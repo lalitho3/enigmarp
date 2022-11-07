@@ -1,0 +1,105 @@
+{% extends "baseDashboard.html" %}
+
+{% load static %}
+
+{% block content %}
+  <div class="main-content" data-aos="fade-down">
+    <p class="text-center h2">Modulo de administración de {{user.username}}</p>
+
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-lg-4">
+                <a href="{% url 'enigmaAdmin:administrarPresupuestos' %}">
+                    <div class="small-box bg-success shadow-sm">
+                        <div class="inner">
+                            <p style="font-size: 20px;">Presupuestos</p>
+                            <p>Estadisticas de presupuestos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <p class="text-center text-muted">(Gestión de personal)</p>
+      <div class="container">
+        <div class="row text-center my-3">
+            {% for usuario in usuarios %}
+            <div class="col-lg-3 col-12">
+                <a href="{% url 'enigmaAdmin:gestionPersonal' usuario.pk %}">
+                    <div class="small-box bg-indigo shadow-sm">
+                        <div class="inner">
+                            <p style="font-size: 20px;">{{usuario.get_full_name}}</p>
+                            <p>Vendedor/a</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+      </div>
+  </div>
+{% endblock content %}
+
+
+{% block scripts %}
+  <script>
+
+    $(document).ready(function () {
+            $('#presupuestostable').DataTable({
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+
+
+     const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Prospectos', 'Clientes', 'Creditos', 'Pedidos'],
+                datasets: [{
+                    label: 'Numeros en conjunto',
+                    data: [{{prospectos}}, {{clientes}}, {{creditos}}, {{pedidos}}],
+                    backgroundColor: [
+                        'rgb(52, 152, 219)',
+                        'rgb(155, 89, 182)',
+                        'rgb(230, 126, 34)',
+                        'rgb(231, 76, 60)',
+                    ],
+                    borderColor: [
+                        'rgb(52, 152, 219)',
+                        'rgb(155, 89, 182)',
+                        'rgb(230, 126, 34)',
+                        'rgb(231, 76, 60)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+  </script>
+{% endblock scripts %}

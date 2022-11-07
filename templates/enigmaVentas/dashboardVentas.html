@@ -1,0 +1,263 @@
+{% extends "baseDashboard.html" %}
+
+{% load static %}
+
+{% block content %}
+  
+<div class="main-content" data-aos="fade-down">
+    <p class="text-center h2">Modulo de ventas de {{user.username}}</p>
+    <div class="container">
+        <div class="row text-center my-3">
+            <div class="col-lg-3 col-12">
+                <div class="small-box bg-success shadow-lg">
+                    <div class="inner">
+                        <h3>{{prospectos.count}}<sup style="font-size: 20px"></sup></h3>
+                        <p>Prospectos registrados</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-12">
+                <div class="small-box bg-indigo shadow-lg">
+                    <div class="inner">
+                        <h3>{{clientes.count}}<sup style="font-size: 20px"></sup></h3>
+                        <p>Clientes registrados</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-12">
+                <div class="small-box bg-indigo shadow-lg">
+                    <div class="inner">
+                        <h3>{{creditos.count}}<sup style="font-size: 20px"></sup></h3>
+                        <p>Créditos registrados</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-12">
+                <div class="small-box bg-indigo shadow-lg">
+                    <div class="inner">
+                        <h3>0<sup style="font-size: 20px"></sup></h3>
+                        <p>Pedidos registrados</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col-lg-3 col-12">
+                <div class="card text-center" >
+                    <div class="card-header">
+                      Registrar nuevo prospecto
+                      <i class="fas fa-users"></i>
+                    </div>
+                    <div class="card-body">
+                      <p class="card-text text-center">Manten tu registro de prospectos actualizado.</p>
+                      <a href="{% url 'enigmaVentas:crearProspecto' %}" class="btn btn-primary">¡Vamos!</a>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-lg-3 col-12">
+                <div class="card text-center" >
+                    <div class="card-header">
+                      Registrar nuevo cliente
+                      <i class="fas fa-user"></i>
+                    </div>
+                    <div class="card-body">
+                      <p class="card-text text-center">Cuando un prospecto se vuelva cliente, migra la información aquí.</p>
+                      <a href="{% url 'enigmaVentas:crearCliente' %}" class="btn btn-primary">¡Vamos!</a>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-lg-3 col-12">
+                <div class="card text-center" >
+                    <div class="card-header">
+                      Registrar nuevo crédito
+                      <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="card-body">
+                      <p class="card-text text-center">Cuando tu cliente quiera requerir un crédito, llena este formulario.</p>
+                      <a href="{% url 'enigmaVentas:solicitudCredito' %}" class="btn btn-primary">¡Vamos!</a>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-lg-3 col-12">
+                <div class="card text-center" >
+                    <div class="card-header">
+                      Registrar nuevo pedido
+                      <i class="fas fa-box"></i>
+                    </div>
+                    <div class="card-body">
+                      <p class="card-text text-center">Manejo de pedidos de tus clientes, recuerda llenarlo correctamente.</p>
+                      <a href="{% url 'enigmaVentas:crearPedido' %}" class="btn btn-primary">¡Vamos!</a>
+                    </div>
+                  </div>
+              </div>
+
+
+              <div class="col-lg-3 col-12">
+                <div class="card text-center" >
+                    <div class="card-header">
+                      Productos
+                      <i class="fas fa-cart-plus"></i>
+                    </div>
+                    <div class="card-body">
+                      <p class="card-text text-center">Gestiona los productos disponibles, consulta precios.</p>
+                      <a href="{% url 'enigmaVentas:verProductos' %}" class="btn btn-primary">¡Vamos!</a>
+                    </div>
+                  </div>
+              </div>
+        </div>
+
+        <div class="table-responsive my-3">
+            <p class="text-center h2">Registro de prospectos</p>
+            <table id="tablaProspectos" class="table align-middle mb-5">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Razón social</th>
+                        <th>RFC</th>
+                        <th>Correo</th>
+                        <th>Celular</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in prospectos %}
+                        <tr>
+                            <td>{{p.Fecha}}</td>
+                            <td>{{p.RazonSocial}}</td>
+                            <td>{{p.Rfc}}</td>
+                            <td>{{p.CorreoElectronico}}</td>
+                            <td>{{p.TelefonoCelular}}</td>
+                            <td>
+                                <a href="{% url 'enigmaVentas:editarProspecto' p.pk %}" class="btn btn-primary">
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                                <a href="{% url 'enigmaVentas:pdfProspecto' p.id %}" class="btn btn-success">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive my-3">
+            <p class="text-center h2 my-3">Registro de clientes</p>
+            <table id="tablaClientes" class="table align-middle mb-5">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Razón social</th>
+                        <th>RFC</th>
+                        <th>Correo</th>
+                        <th>Celular</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in clientes %}
+                        <tr>
+                            <td>{{c.Fecha}}</td>
+                            <td>{{c.RazonSocial}}</td>
+                            <td>{{c.Rfc}}</td>
+                            <td>{{c.CorreoElectronico}}</td>
+                            <td>{{c.TelefonoCelular}}</td>
+                            <td>
+                                <a href="{% url 'enigmaVentas:editarCliente' c.pk %}" class="btn btn-primary">
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                                <a href="{% url 'enigmaVentas:pdfCliente' c.id %}" class="btn btn-success">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive my-3">
+            <p class="text-center h2">Registro de créditos</p>
+            <table id="tablaCreditos" class="table align-middle mb-5">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Razón social</th>
+                        <th>RFC</th>
+                        <th>Correo</th>
+                        <th>Celular</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for credito in creditos %}
+                        <tr>
+                            <td>{{credito.Fecha}}</td>
+                            <td>{{credito.RazonSocial}}</td>
+                            <td>{{credito.Rfc}}</td>
+                            <td>{{credito.CorreoElectronico}}</td>
+                            <td>{{credito.TelefonoCelular}}</td>
+                            <td>
+                                <a href="{% url 'enigmaVentas:editarCredito' credito.pk %}" class="btn btn-primary">
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                                <a href="{% url 'enigmaVentas:pdfCredito' credito.id %}" class="btn btn-success">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+{% block scripts %}
+  <script>
+      $(document).ready(function () {
+            $('#tablaProspectos').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                responsive: false,
+            });
+
+             $('#tablaClientes').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                responsive: false,
+            });
+
+            $('#tablaCreditos').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                responsive: false,
+            });
+        });
+  </script>
+{% endblock scripts %}
